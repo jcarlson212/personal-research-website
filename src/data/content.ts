@@ -68,7 +68,7 @@ export const garrychess = {
       venue: 'IEEE Conference on Games (CoG) 2026 · Oral',
       summary:
         'Style-weighted preference optimization (DPO variants) fine-tunes a human move model toward a target grandmaster, producing play that is both strong and recognizably in-style. First author, team of three.',
-      href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing',
+      href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing',
     },
     {
       index: 2,
@@ -111,7 +111,7 @@ export const otherResearch: ResearchItem[] = [
     summary:
       'Benchmarks automated machine learning against hand-engineered pipelines for clinical aneurysm-rupture risk prediction. Co-author.',
     tags: ['Clinical ML', 'AutoML'],
-    href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing',
+    href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing',
   },
   {
     title: 'TopoExplore: Topology-Guided Exploration for RL',
@@ -229,7 +229,7 @@ export const publications: Publication[] = [
     venue: 'IEEE Conference on Games (CoG) — Oral',
     year: '2026',
     status: 'published',
-    href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing',
+    href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing',
   },
   {
     title:
@@ -245,7 +245,7 @@ export const publications: Publication[] = [
     venue: 'Congress of Neurological Surgeons (CNS) — Poster',
     year: '2025',
     status: 'published',
-    href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing',
+    href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing',
   },
 ]
 
