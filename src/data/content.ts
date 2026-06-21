@@ -17,7 +17,7 @@ export const profile = {
   title: 'ML Research Engineer',
   location: 'New York, NY',
   tagline:
-    'I study how machines can model human decision-making — through human-aligned policy learning, reinforcement learning, and the fidelity of ML reasoning.',
+    'I work on two threads: personalizing policies through LLM fine-tuning and reinforcement learning, and exploration for applications like robotics — driven by latent prediction errors (ICM) and topological navigation.',
   email: 'jcarlson212@gmail.com',
   links: {
     github: 'https://github.com/jcarlson212',
