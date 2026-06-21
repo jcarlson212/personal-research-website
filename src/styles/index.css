@@ -1,0 +1,7 @@
+/* Design system added in the next commit. */
+:root {
+  font-family: system-ui, sans-serif;
+}
+body {
+  margin: 0;
+}
