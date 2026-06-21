@@ -78,7 +78,7 @@ export const garrychess = {
       venue: 'Targeting AAAI 2027',
       summary:
         'A compact per-player embedding that captures style disentangled from strength (linear probe recovers rating at only R²=0.06). A rating-conditioned base model — Maia-3 policy plus Stockfish features — explains rating-typical play; a frozen residual leaves the embedding to encode only how a player deviates.',
-      href: 'https://www.garrychess.ai',
+      href: 'https://drive.google.com/file/d/1Xp2UHX-kAIGp1mRZGiSGV0bZxXLRuPZy/view?usp=sharing',
     },
     {
       index: 3,
@@ -238,6 +238,7 @@ export const publications: Publication[] = [
     venue: 'In submission (targeting AAAI 2027)',
     year: '2026',
     status: 'in-submission',
+    href: 'https://drive.google.com/file/d/1Xp2UHX-kAIGp1mRZGiSGV0bZxXLRuPZy/view?usp=sharing',
   },
   {
     title: 'The Use of AutoML for Predicting Intracranial Aneurysm Rupture',
