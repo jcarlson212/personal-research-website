@@ -30,13 +30,15 @@ export const profile = {
 export const about = {
   paragraphs: [
     "I'm an ML research engineer in New York. For the last five years I've built and deployed large-scale machine-learning and reinforcement-learning systems in production — credit-risk models, distributed inference serving over a billion embeddings a day, and safety-constrained RL — first at Amazon and AppLovin, and now as an independent researcher.",
-    'My research sits at the intersection of human-aligned modeling and reinforcement learning: I want models that capture how *particular people* decide, not just what is optimal. Chess is my main model system — it offers near-unlimited labeled human decisions across the full skill spectrum — but the same questions show up in clinical decision-making and in the reliability of model-generated reasoning.',
+    'My research runs along two threads. The first is *personalization* — policies that capture how a particular person decides, not just what is optimal — through LLM fine-tuning, preference optimization, and reinforcement learning. Chess is my main model system here: it offers near-unlimited labeled human decisions across the full skill spectrum, and the same questions resurface in clinical decision-making and in the reliability of model-generated reasoning.',
+    'The second thread is *exploration* — how an agent should seek out what will teach it the most. I work on intrinsic motivation from latent prediction errors (in the spirit of ICM) and on topology-guided navigation, aimed at sample-efficient learning for settings like robotics.',
     'I hold an M.A. in Mathematics (4.0) and a B.S. in Computer Science (3.9) and B.S. in Mathematics from Arizona State University, with graduate coursework in analysis, topology, and abstract algebra.',
   ],
   interests: [
-    'Human-aligned policy learning',
-    'Reinforcement learning & exploration',
+    'Personalized policies (LLM fine-tuning + RL)',
     'Preference optimization (DPO variants)',
+    'Exploration & intrinsic motivation (ICM)',
+    'Topological navigation',
     'Representation learning',
     'Clinical ML & reasoning fidelity',
   ],
