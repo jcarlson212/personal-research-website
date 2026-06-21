@@ -14,7 +14,7 @@ export const STATUS_LABEL: Record<Status, string> = {
 /* ---- Profile ------------------------------------------------------------- */
 export const profile = {
   name: 'Jason Carlson',
-  title: 'ML Research Engineer',
+  title: 'AI Research Engineer',
   location: 'New York, NY',
   tagline:
     'I work on two threads: personalizing policies through LLM fine-tuning and reinforcement learning, and exploration for applications like robotics — driven by latent prediction errors (ICM) and topological navigation.',
@@ -219,6 +219,8 @@ export interface Publication {
   year: string
   status: Status
   href?: string
+  /** Optional label (e.g. "Article") to distinguish non-peer-reviewed work. */
+  type?: string
 }
 
 export const publications: Publication[] = [
@@ -247,6 +249,16 @@ export const publications: Publication[] = [
     year: '2025',
     status: 'published',
     href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing',
+  },
+  {
+    title:
+      'How Amazon Search Reduced ML Inference Costs by 85% with AWS Inferentia',
+    authors: 'J. Moura, J. Carlson, J. Singh, et al.',
+    venue: 'AWS Machine Learning Blog',
+    year: '2022',
+    status: 'published',
+    type: 'Article',
+    href: 'https://aws.amazon.com/blogs/machine-learning/how-amazon-search-reduced-ml-inference-costs-by-85-with-aws-inferentia/',
   },
 ]
 
