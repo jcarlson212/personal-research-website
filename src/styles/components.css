@@ -2,3 +2,180 @@
    Component & section styles.
    Added incrementally alongside each section component.
    ========================================================================== */
+
+/* ----------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: 1;
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--text-muted);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn--primary {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.btn--primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ----------------------------------------------------------------------------
+   Nav
+   -------------------------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.nav--scrolled {
+  border-bottom-color: var(--border);
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  height: 4rem;
+}
+.nav__brand {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-tight);
+  white-space: nowrap;
+}
+.nav__brand-dot {
+  margin-inline: 0.4rem;
+  color: var(--text-muted);
+}
+.nav__brand-role {
+  color: var(--text-secondary);
+  font-weight: var(--fw-regular);
+}
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  margin-left: auto;
+  margin-right: var(--sp-5);
+}
+.nav__link {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  transition: color 0.15s ease;
+}
+.nav__link:hover {
+  color: var(--text);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+/* ----------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.hero {
+  padding-block: clamp(var(--sp-8), 12vh, var(--sp-10)) var(--sp-9);
+}
+.hero__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-4);
+}
+.hero__name {
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.035em;
+  margin-bottom: var(--sp-2);
+}
+.hero__title {
+  font-size: var(--fs-lg);
+  color: var(--text-secondary);
+  font-weight: var(--fw-medium);
+  margin-bottom: var(--sp-5);
+}
+.hero__tagline {
+  max-width: 40rem;
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  line-height: var(--lh-base);
+  margin-bottom: var(--sp-6);
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
+}
+.hero__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+}
+.social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  transition: color 0.15s ease;
+}
+.social:hover {
+  color: var(--text);
+}
+.social__ext {
+  color: var(--text-muted);
+}
+
+/* ----------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .nav__links {
+    display: none;
+  }
+}
