@@ -520,6 +520,10 @@
 .pub__sep {
   color: var(--text-muted);
 }
+.pub__type {
+  margin-left: 0.2rem;
+  padding-block: 0.05rem;
+}
 .pub__venue {
   color: var(--text-secondary);
 }

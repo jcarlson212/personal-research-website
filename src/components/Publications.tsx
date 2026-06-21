@@ -6,7 +6,7 @@ export default function Publications() {
   return (
     <section className="section" id="publications">
       <div className="container">
-        <SectionHeader eyebrow="Publications" title="Papers & posters" />
+        <SectionHeader eyebrow="Publications" title="Papers, posters & articles" />
         <ol className="pubs">
           {publications.map((p) => {
             const Tag = p.href ? 'a' : 'div'
@@ -27,6 +27,7 @@ export default function Publications() {
                     <span className="pub__authors">{p.authors}</span>
                     <span className="pub__sep">·</span>
                     <span className="pub__venue">{p.venue}</span>
+                    {p.type && <span className="tag pub__type">{p.type}</span>}
                   </p>
                   {p.status !== 'published' && (
                     <span className="pub__status">{STATUS_LABEL[p.status]}</span>
