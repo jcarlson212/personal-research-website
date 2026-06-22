@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import SectionHeader from './SectionHeader'
 import { ArrowUpRight } from './icons'
 import {
@@ -12,6 +13,27 @@ function StatusPill({ status }: { status: Status }) {
 }
 
 export default function Research() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0.5 },
+    )
+
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section className="section" id="research">
       <div className="container">
@@ -78,6 +100,23 @@ export default function Research() {
               </li>
             ))}
           </ol>
+
+          <figure className="flagship__demo">
+            <video
+              ref={videoRef}
+              className="flagship__video"
+              src="/reinforcement_learning_human_chess_example.mp4"
+              controls
+              loop
+              muted
+              playsInline
+              preload="metadata"
+            />
+            <figcaption className="flagship__caption">
+              Teaser — a rough preview of what Paper 3 (adaptive engine
+              consultation) is aiming for.
+            </figcaption>
+          </figure>
         </article>
 
         {/* Other research */}

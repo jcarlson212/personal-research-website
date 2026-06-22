@@ -313,6 +313,24 @@
   margin-bottom: var(--sp-6);
 }
 
+/* Demo video */
+.flagship__demo {
+  margin-top: var(--sp-6);
+}
+.flagship__video {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+}
+.flagship__caption {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-top: var(--sp-3);
+}
+
 /* Stage timeline */
 .stages {
   display: flex;
