@@ -249,6 +249,11 @@
   border-color: color-mix(in srgb, #1a7f4b 30%, transparent);
   background: color-mix(in srgb, #1a7f4b 8%, transparent);
 }
+.pill--preprint {
+  color: #b31b1b;
+  border-color: color-mix(in srgb, #b31b1b 30%, transparent);
+  background: color-mix(in srgb, #b31b1b 8%, transparent);
+}
 .pill--in-submission {
   color: #9a6a00;
   border-color: color-mix(in srgb, #9a6a00 30%, transparent);
@@ -259,6 +264,9 @@
 }
 :root[data-theme='dark'] .pill--published {
   color: #4ed089;
+}
+:root[data-theme='dark'] .pill--preprint {
+  color: #f06a6a;
 }
 :root[data-theme='dark'] .pill--in-submission {
   color: #e3b341;
@@ -373,6 +381,10 @@
 .stage--published .stage__node {
   background: #1a7f4b;
   border-color: #1a7f4b;
+}
+.stage--preprint .stage__node {
+  background: #b31b1b;
+  border-color: #b31b1b;
 }
 .stage--in-submission .stage__node {
   background: #d8a32a;

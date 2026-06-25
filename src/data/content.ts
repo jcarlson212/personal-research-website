@@ -3,10 +3,11 @@
    Edit copy, links, and research items here; components render from this.
    ========================================================================== */
 
-export type Status = 'published' | 'in-submission' | 'in-preparation'
+export type Status = 'published' | 'preprint' | 'in-submission' | 'in-preparation'
 
 export const STATUS_LABEL: Record<Status, string> = {
   published: 'Published',
+  preprint: 'Preprint · arXiv',
   'in-submission': 'In submission',
   'in-preparation': 'In preparation',
 }
@@ -74,11 +75,11 @@ export const garrychess = {
       index: 2,
       title:
         'Elo-Disentangled Player-Style Embeddings via a Rating-Conditioned Residual Move Model',
-      status: 'in-submission',
-      venue: 'Targeting AAAI 2027',
+      status: 'preprint',
+      venue: 'Preprint on arXiv · targeting AAAI 2027',
       summary:
         'A compact per-player embedding that captures style disentangled from strength (linear probe recovers rating at only R²=0.06). A rating-conditioned base model — Maia-3 policy plus Stockfish features — explains rating-typical play; a frozen residual leaves the embedding to encode only how a player deviates.',
-      href: 'https://drive.google.com/file/d/1Xp2UHX-kAIGp1mRZGiSGV0bZxXLRuPZy/view?usp=sharing',
+      href: 'https://arxiv.org/abs/2606.25176',
     },
     {
       index: 3,
@@ -237,10 +238,10 @@ export const publications: Publication[] = [
     title:
       'Elo-Disentangled Player-Style Embeddings via a Rating-Conditioned Residual Move Model',
     authors: 'J. Carlson',
-    venue: 'In submission (targeting AAAI 2027)',
+    venue: 'Preprint on arXiv (targeting AAAI 2027)',
     year: '2026',
-    status: 'in-submission',
-    href: 'https://drive.google.com/file/d/1Xp2UHX-kAIGp1mRZGiSGV0bZxXLRuPZy/view?usp=sharing',
+    status: 'preprint',
+    href: 'https://arxiv.org/abs/2606.25176',
   },
   {
     title: 'The Use of AutoML for Predicting Intracranial Aneurysm Rupture',
