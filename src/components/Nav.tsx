@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 import { profile } from '../data/content'
 
@@ -23,20 +24,23 @@ export default function Nav() {
   return (
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="nav__inner container">
-        <a href="#top" className="nav__brand">
+        <Link to="/" className="nav__brand">
           {profile.name}
           <span className="nav__brand-dot" aria-hidden>
             ·
           </span>
           <span className="nav__brand-role">{profile.title}</span>
-        </a>
+        </Link>
 
         <nav className="nav__links" aria-label="Sections">
           {SECTIONS.map((s) => (
-            <a key={s.id} href={`#${s.id}`} className="nav__link">
+            <Link key={s.id} to={`/#${s.id}`} className="nav__link">
               {s.label}
-            </a>
+            </Link>
           ))}
+          <Link to="/blog" className="nav__link nav__link--blog">
+            Blog
+          </Link>
         </nav>
 
         <ThemeToggle />
