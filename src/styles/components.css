@@ -810,3 +810,268 @@
     gap: var(--sp-2);
   }
 }
+
+/* ----------------------------------------------------------------------------
+   Blog index
+   -------------------------------------------------------------------------- */
+.blog {
+  padding-top: var(--sp-8);
+  min-height: 70vh;
+}
+
+.blog__intro {
+  color: var(--text-secondary);
+  max-width: 44rem;
+  margin-top: calc(-1 * var(--sp-4));
+  margin-bottom: var(--sp-7);
+}
+
+.blog__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.blog__item {
+  padding-block: var(--sp-6);
+  border-top: 1px solid var(--border);
+}
+
+.blog__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+
+.blog__tags {
+  display: inline-flex;
+  gap: var(--sp-2);
+}
+
+.blog__title {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--sp-2);
+}
+
+.blog__title-link {
+  transition: color 0.15s ease;
+}
+.blog__title-link:hover {
+  color: var(--accent);
+}
+
+.blog__summary {
+  color: var(--text-secondary);
+  max-width: 46rem;
+  margin-bottom: var(--sp-3);
+}
+
+.blog__read {
+  font-size: var(--fs-sm);
+}
+
+/* ----------------------------------------------------------------------------
+   Blog post page
+   -------------------------------------------------------------------------- */
+.post {
+  padding-top: var(--sp-8);
+}
+
+.post__container {
+  max-width: 46rem;
+}
+
+.post__back {
+  font-size: var(--fs-sm);
+}
+
+.post__header {
+  margin-top: var(--sp-5);
+  margin-bottom: var(--sp-7);
+  padding-bottom: var(--sp-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.post__title {
+  font-size: var(--fs-2xl);
+  margin-bottom: var(--sp-3);
+}
+
+.post__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.post__status {
+  color: var(--text-muted);
+  padding-block: var(--sp-7);
+  text-align: center;
+}
+
+/* Post body typography (rendered markdown) */
+.post__body {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+}
+
+.post__body h2 {
+  font-size: var(--fs-xl);
+  margin-top: var(--sp-7);
+  margin-bottom: var(--sp-4);
+  color: var(--text);
+}
+
+.post__body h3 {
+  font-size: var(--fs-lg);
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-3);
+  color: var(--text);
+}
+
+.post__body p {
+  margin-bottom: var(--sp-4);
+}
+
+.post__body a {
+  color: var(--accent);
+  font-weight: var(--fw-medium);
+}
+.post__body a:hover {
+  color: var(--accent-hover);
+}
+
+.post__body ul,
+.post__body ol {
+  margin-bottom: var(--sp-4);
+  padding-left: var(--sp-5);
+}
+.post__body ul {
+  list-style: disc;
+}
+.post__body ol {
+  list-style: decimal;
+}
+.post__body li {
+  margin-bottom: var(--sp-2);
+}
+.post__body li::marker {
+  color: var(--text-muted);
+}
+
+.post__body blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: var(--sp-4);
+  margin-block: var(--sp-5);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.post__body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-block: var(--sp-7);
+}
+
+.post__body code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.35em;
+}
+
+.post__body pre {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  overflow-x: auto;
+  margin-bottom: var(--sp-4);
+}
+.post__body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.post__body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--sp-5);
+  font-size: var(--fs-base);
+  display: block;
+  overflow-x: auto;
+}
+.post__body th,
+.post__body td {
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--border);
+}
+.post__body th {
+  color: var(--text);
+  font-weight: var(--fw-semibold);
+}
+
+/* KaTeX: keep display math scrollable on small screens, never overflow. */
+.post__body .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: var(--sp-2);
+  margin-block: var(--sp-4);
+}
+.post__body .katex {
+  font-size: 1.06em;
+}
+
+/* Figures (emitted as spans because markdown images live inside <p>) */
+.post__figure {
+  display: block;
+  margin-block: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.post__figure img {
+  display: block;
+  margin-inline: auto;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.post__figcaption {
+  display: block;
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: var(--sp-3);
+}
+
+/* Theme-paired figures: show the variant matching the current theme. */
+:root[data-theme='dark'] .post__figure .fig-light {
+  display: none;
+}
+:root:not([data-theme='dark']) .post__figure .fig-dark {
+  display: none;
+}
+
+/* On phones the section links hide, but Blog stays reachable. */
+@media (max-width: 640px) {
+  .nav__links {
+    display: flex;
+  }
+  .nav__links .nav__link:not(.nav__link--blog) {
+    display: none;
+  }
+}
