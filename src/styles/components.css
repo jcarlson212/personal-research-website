@@ -259,8 +259,14 @@
   border-color: color-mix(in srgb, #9a6a00 30%, transparent);
   background: color-mix(in srgb, #9a6a00 9%, transparent);
 }
-.pill--in-preparation {
+.pill--in-preparation,
+.pill--planned {
   color: var(--text-muted);
+}
+.pill--software {
+  color: #0b63c4;
+  border-color: color-mix(in srgb, #0b63c4 30%, transparent);
+  background: color-mix(in srgb, #0b63c4 8%, transparent);
 }
 :root[data-theme='dark'] .pill--published {
   color: #4ed089;
@@ -271,10 +277,18 @@
 :root[data-theme='dark'] .pill--in-submission {
   color: #e3b341;
 }
+:root[data-theme='dark'] .pill--software {
+  color: #6cb2ff;
+}
 
 /* ----------------------------------------------------------------------------
-   Flagship: GarryChess
+   Research programs (flagship-style cards)
    -------------------------------------------------------------------------- */
+.programs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
 .flagship {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -386,6 +400,10 @@
   background: #b31b1b;
   border-color: #b31b1b;
 }
+.stage--software .stage__node {
+  background: #0b63c4;
+  border-color: #0b63c4;
+}
 .stage--in-submission .stage__node {
   background: #d8a32a;
   border-color: #d8a32a;
@@ -431,6 +449,28 @@
   font-size: var(--fs-base);
   color: var(--text-secondary);
   max-width: 44rem;
+}
+.stage__gallery {
+  margin-top: var(--sp-4);
+  max-width: 44rem;
+}
+.stage__gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--sp-2);
+}
+.stage__gallery-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius) / 2);
+  border: 1px solid var(--border);
+}
+.stage__gallery-caption {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-normal);
+  color: var(--text-muted);
 }
 
 /* ----------------------------------------------------------------------------
