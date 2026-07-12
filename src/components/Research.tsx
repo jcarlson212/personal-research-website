@@ -2,9 +2,10 @@ import { useEffect, useRef } from 'react'
 import SectionHeader from './SectionHeader'
 import { ArrowUpRight } from './icons'
 import {
-  garrychess,
+  programs,
   otherResearch,
   STATUS_LABEL,
+  type Program,
   type Status,
 } from '../data/content'
 
@@ -12,7 +13,8 @@ function StatusPill({ status }: { status: Status }) {
   return <span className={`pill pill--${status}`}>{STATUS_LABEL[status]}</span>
 }
 
-export default function Research() {
+/** Autoplays while in view, pauses when scrolled away. */
+function DemoVideo({ src, caption }: { src: string; caption: string }) {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -35,89 +37,128 @@ export default function Research() {
   }, [])
 
   return (
+    <figure className="flagship__demo">
+      <video
+        ref={videoRef}
+        className="flagship__video"
+        src={src}
+        controls
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      />
+      <figcaption className="flagship__caption">{caption}</figcaption>
+    </figure>
+  )
+}
+
+function ProgramCard({ program }: { program: Program }) {
+  return (
+    <article className="flagship">
+      <div className="flagship__head">
+        <div>
+          <div className="flagship__kicker">{program.kicker}</div>
+          <h3 className="flagship__title">
+            {program.url ? (
+              <a
+                href={program.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline"
+              >
+                {program.name}
+                <ArrowUpRight size={18} />
+              </a>
+            ) : (
+              program.name
+            )}
+          </h3>
+        </div>
+        {program.url && program.urlLabel && (
+          <a
+            href={program.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flagship__url"
+          >
+            {program.urlLabel}
+          </a>
+        )}
+      </div>
+      <p className="flagship__blurb">{program.blurb}</p>
+
+      {/* Stages as a progress timeline */}
+      <ol className="stages">
+        {program.stages.map((s) => (
+          <li key={s.index} className={`stage stage--${s.status}`}>
+            <div className="stage__rail" aria-hidden>
+              <span className="stage__node" />
+            </div>
+            <div className="stage__content">
+              <div className="stage__meta">
+                <span className="stage__num">{s.label}</span>
+                <StatusPill status={s.status} />
+              </div>
+              <h4 className="stage__title">
+                {s.href ? (
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-underline"
+                  >
+                    {s.title}
+                    <ArrowUpRight size={15} />
+                  </a>
+                ) : (
+                  s.title
+                )}
+              </h4>
+              <p className="stage__venue">{s.venue}</p>
+              <p className="stage__summary">{s.summary}</p>
+              {s.images && (
+                <figure className="stage__gallery">
+                  <div className="stage__gallery-grid">
+                    {s.images.map((img) => (
+                      <img
+                        key={img.src}
+                        src={img.src}
+                        alt={img.alt}
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                  {s.imagesCaption && (
+                    <figcaption className="stage__gallery-caption">
+                      {s.imagesCaption}
+                    </figcaption>
+                  )}
+                </figure>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      {program.video && (
+        <DemoVideo src={program.video.src} caption={program.video.caption} />
+      )}
+    </article>
+  )
+}
+
+export default function Research() {
+  return (
     <section className="section" id="research">
       <div className="container">
         <SectionHeader eyebrow="Research" title="What I'm working on" />
 
-        {/* Flagship: GarryChess */}
-        <article className="flagship">
-          <div className="flagship__head">
-            <div>
-              <div className="flagship__kicker">Flagship program</div>
-              <h3 className="flagship__title">
-                <a
-                  href={garrychess.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-underline"
-                >
-                  {garrychess.name}
-                  <ArrowUpRight size={18} />
-                </a>
-              </h3>
-            </div>
-            <a
-              href={garrychess.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flagship__url"
-            >
-              garrychess.ai
-            </a>
-          </div>
-          <p className="flagship__blurb">{garrychess.blurb}</p>
-
-          {/* Three sub-papers as a progress timeline */}
-          <ol className="stages">
-            {garrychess.stages.map((s) => (
-              <li key={s.index} className={`stage stage--${s.status}`}>
-                <div className="stage__rail" aria-hidden>
-                  <span className="stage__node" />
-                </div>
-                <div className="stage__content">
-                  <div className="stage__meta">
-                    <span className="stage__num">Paper {s.index}</span>
-                    <StatusPill status={s.status} />
-                  </div>
-                  <h4 className="stage__title">
-                    {s.href ? (
-                      <a
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-underline"
-                      >
-                        {s.title}
-                        <ArrowUpRight size={15} />
-                      </a>
-                    ) : (
-                      s.title
-                    )}
-                  </h4>
-                  <p className="stage__venue">{s.venue}</p>
-                  <p className="stage__summary">{s.summary}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-
-          <figure className="flagship__demo">
-            <video
-              ref={videoRef}
-              className="flagship__video"
-              src="/reinforcement_learning_human_chess_example.mp4"
-              controls
-              loop
-              muted
-              playsInline
-              preload="metadata"
-            />
-            <figcaption className="flagship__caption">
-              Teaser — a rough preview of what Paper 3 (adaptive engine
-              consultation) is aiming for.
-            </figcaption>
-          </figure>
-        </article>
+        <div className="programs">
+          {programs.map((p) => (
+            <ProgramCard key={p.name} program={p} />
+          ))}
+        </div>
 
         {/* Other research */}
         <div className="other-research">
