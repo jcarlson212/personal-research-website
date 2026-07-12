@@ -1,8 +1,10 @@
+Background assumed: we assume knowledge of basic set theory & linear algebra typically taught in undergraduate Computer Science programs. Some familiarity with what an Markov Decision Process (MDP) environment would look like in a 2D grid world would also help with understanding how exploration within a grid world translates to a controller learning from its environment through algorithms like PPO. Familiarity with point set topology would help make the ideas easier to digest – we do sometimes reference geometric spaces / other examples that would be obscure to a typical computer scientist, but these references are meant to be supplementary for readers with an additional background in introductory topology rather than core to understanding the key concepts.
+
 First, let's start with why we would even care about studying topology and simplexes in the first place. Well, to start they help us compute structures that are invariant under continuous deformation... who cares? Well, a few topological data analysts do (growing), because by being invariant under continuous deformation these topological features tend to be very robust — far more robust than detecting whether there's a car, a bat, a plane, etc. in some environment.
 
-What do I mean by robust? If you perturbed the environment through some bounded amount of noise, these features would often still persist — the median also has a large amount of robustness, but it's robust to unbounded variance along the extremes rather than a large interior burst of noise from many points. Thus, we can count on finding them, and therefore rely on them for fundamental early exploration in learning algorithms.
+What do I mean by robust? A common example of a robust feature is the median – it's statistical robustness comes from being less sensitive to unbounded variance along the extremes of the distribution of points, but it is not robust to a large interior burst of noise from many points. On the other hand, Homological features, a type of topological feature often related to the appearance of holes in the environment, are robust to pertubations in the environment through some bounded amount of noise (the features still exist) so long as the number of holes are finite – hence an interior "burst" of noise they remain invariant under. By burst of noise I really just mean if you jiggle all of the points you measured by some random amount of distance within a bounded range these homological features would still exist. Thus, we can count on finding them, and rely on them for fundamental early exploration in learning algorithms.
 
-So now that you might have some sense that these features are stable, what can they actually be used for? They can be used for early navigation, similar to the maps that got explorers over from Spain, Portugal, France, and England to the new world after the first wave. The maps were wildly off in terms of metric distance, but topologically (the general shape of islands or rivers penatrating the continent) were correct (hard to be off topologically when drawing a map – you'd have to believe a daydream of discovering a new island in the middle of the sea or a river cutting through a land mass).
+So now that you might have some sense that these features are stable, what can they actually be used for? They can be used for early navigation, similar to the maps that got explorers over from Spain, Portugal, France, and England to the new world after the first wave. The maps were wildly off in terms of metric distance, but topologically (the general shape of islands or rivers penetrating the continent) were correct (hard to be off topologically when drawing a map – you'd have to believe a daydream of discovering a new island in the middle of the sea or a river cutting through a land mass).
 
 Concretely, this post is building towards the following example: an agent exploring a gridworld with a chamber it has never been inside. The agent's cloud of visited states wraps around that chamber, and that wrapping is a hole — a feature we can compute directly from the visited states. The hole tells us there's a pocket our exploration missed, and it traces the ring of states surrounding it, which is exactly where to look for an entrance if one exists. The same idea extends well past gridworlds: in search and rescue, a person trapped inside a large amount of shrapnel behind a narrow passage shows up the same way — the searched space wraps around an unsearched void, and the hole both flags the void and localizes where a way in would have to be.
 
@@ -15,10 +17,10 @@ In this blog post we will go over basic definitions in topology with examples, t
 A *topology* on a set $X$ is a collection $\tau$ of subsets of $X$ — called the *open sets* — satisfying three axioms:
 
 1. $\emptyset \in \tau$ and $X \in \tau$,
-2. any arbitrary (uncountably infinite) union of open sets is open,
+2. any arbitrary (possibly uncountably infinite) union of open sets is open,
 3. any *finite* intersection of open sets is open.
 
-The example that matters for us is the *standard topology* on $\mathbb{R}^n$: a set is open if around every one of its points you can fit an open ball
+We call the pairing of $X$ with its topology $T$, $(X, T)$, a topological space. A space in general is a way of alluding to a set having some mathematically structure attached to it that defines relationships between the points in the set. The example that matters for us is the *standard topology* on $\mathbb{R}^n$: a set is open if around every one of its points you can fit an open ball
 
 $$
 B(x, r) = \{ y \in \mathbb{R}^n : \|y - x\| < r \}
@@ -26,9 +28,9 @@ $$
 
 that stays inside the set. The strict inequality is the point — an open ball does not contain its boundary, and open sets have no boundary points of their own. Unions of open balls give you every open set in $\mathbb{R}^n$, so the balls *generate* the topology:
 
-![Open balls in the plane. Boundaries are dashed because they're not included; any union of open balls is again open. Points outside stay outside.](figures/open_balls_light.gif)
+![Open balls in the plane. Boundaries are dashed because they're not included; any union of open balls is again open. Points outside each ball being unioned stay outside of the union.](figures/open_balls_light.gif)
 
-Two degenerate examples to calibrate the definition: the *discrete topology*, where every subset is open (take $\tau$ to be the whole power set), and the *trivial topology*, where only $\emptyset$ and $X$ are. Both satisfy the axioms; neither is interesting geometrically. And one construction we'll use implicitly throughout: any subset $A \subseteq X$ inherits a *subspace topology* — its open sets are $U \cap A$ for $U$ open in $X$. That's how a circle sitting inside $\mathbb{R}^2$ gets its topology from interesecting unions of open balls with it.
+Two degenerate examples to calibrate the definition: the *discrete topology*, where every subset is open (take $\tau$ to be the whole power set), and the *trivial topology*, where only $\emptyset$ and $X$ are. Both satisfy the axioms; neither is interesting geometrically. And one construction we'll use implicitly throughout: any subset $A \subseteq X$ inherits a *subspace topology* — its open sets are $U \cap A$ for $U$ open in $X$. That's how a circle sitting inside $\mathbb{R}^2$ gets its topology from intersecting unions of open balls with it.
 
 A map $f : X \to Y$ between topological spaces is *continuous* if $f^{-1}(V)$ is open in $X$ for every open $V$ in $Y$. For metric spaces like $\mathbb{R}^{n}$ this is the usual $\varepsilon$–$\delta$ w/ a bit of abstract overhead.
 
@@ -40,9 +42,9 @@ This is the "rubber sheet" notion of equivalence: one can stretch and bend, but 
 
 ![A homeomorphism between a blob and a disk. All metric information is destroyed; all topological information is preserved.](figures/blob_to_circle_light.gif)
 
-Holes are the classic obstruction as one can't simply deform space together and then punctured apart without the inverse map having a discontinuity at the hole. For example, a disk is not homeomorphic to an annulus (a disk with a smaller disk removed): the annulus has a hole and the disk doesn't, and — once we've built the machinery below — that difference is controlled by an invariant, so no homeomorphism can exist.
+Holes are the classic obstruction as one can't simply deform a space with a hole to one without (the forward map) without the inverse having to discontinuously separate two points to recreate the original space's hole. For example, a disk is not homeomorphic to an annulus (the result of removing a smaller disk from the interior of a larger disk): the annulus has a hole and the disk doesn't, and — once we've built the machinery below — that difference is controlled by an invariant, so no homeomorphism can exist.
 
-Even if spaces have the *same-looking* holes they can still fail to be homeomorphic. The circle $S^1$, the annulus, the cylinder, and the Möbius band each have "one loop's worth" of hole — every one of them wraps around a single hole in the same essential way. But no two are homeomorphic: the circle is 1-dimensional while the others are 2-dimensional; the cylinder's boundary is two circles while the Möbius band's boundary is one. While they have the same hole structure, one can see that they can't be continuously deformed in the case of $S^{1}$ and the cyclinder because high dimensions collapse onto a line, breaking continuity in the inverse (a collapse in dimensionality is far stronger than a simple stretch w.r.t. infinetismal locality captured by open balls that can always be found around a point for subspaces of euclidean space). This mismatch is exactly what the next definition is for.
+Even if spaces have the *same-looking* holes they can still fail to be homeomorphic. The circle $S^1$, the annulus, the cylinder, and the Möbius band each have "one loop's worth" of hole — every one of them wraps around a single hole in the same essential way. But no two are homeomorphic: the circle is 1-dimensional while the others are 2-dimensional; the cylinder's boundary is two circles while the Möbius band's boundary is one. While they have the same hole structure, one can see that they can't be continuously deformed in the case of $S^{1}$ and the cylinder because high dimensions collapse onto a line, breaking continuity in the inverse (a collapse in dimensionality is far stronger than a simple stretch w.r.t. infinitesimal locality captured by open balls that can always be found around a point for subspaces of euclidean space). This mismatch is exactly what the next definition is for.
 
 ## Homotopy equivalence
 
@@ -52,7 +54,7 @@ $$
 H : X \times [0,1] \to Y, \qquad H(\cdot, 0) = f, \quad H(\cdot, 1) = g.
 $$
 
-Two *spaces* are *homotopy equivalent* ($X \simeq Y$) if there are maps $f : X \to Y$ and $g : Y \to X$ with $g \circ f \simeq \mathrm{id}_X$ and $f \circ g \simeq \mathrm{id}_Y$. Notice that for homeomorphism we demand $g \circ f = \mathrm{id}_X$. Homotopy equivalence only asks for it up to deformation — a genuinely weaker relation.
+Two spaces are homotopy equivalent ($X \simeq Y$) if there are maps $f : X \to Y$ and $g : Y \to X$ with $g \circ f \simeq \mathrm{id}_X$ and $f \circ g \simeq \mathrm{id}_Y$. Notice that for homeomorphism we demand $g \circ f = \mathrm{id}_X$, whereas homotopy equivalence only requires that $g \circ f$ is homotopic to $\mathrm{id}_X$.
 
 A nice example of this concept: the punctured plane $\mathbb{R}^2 \setminus \{0\}$ is homotopy equivalent to the circle. Take $f : \mathbb{R}^2 \setminus \{0\} \to S^1$, $f(x) = x / \|x\|$, and let $g$ be the inclusion of the circle. Then $f \circ g = \mathrm{id}_{S^1}$ exactly, and $g \circ f \simeq \mathrm{id}$ via $H(x, t) = (1-t)\,x + t\,x/\|x\|$, which slides every point radially onto the circle:
 
@@ -60,7 +62,7 @@ A nice example of this concept: the punctured plane $\mathbb{R}^2 \setminus \{0\
 
 The same argument shows the annulus, the cylinder, and (with a little more care) the Möbius band are all homotopy equivalent to $S^1$ — resolving the tension from the last section. They aren't homeomorphic, but they carry identical hole structure, and homotopy equivalence is the relation that says so.
 
-Examples that are *not* homotopy equivalent: a point and a circle (the circle's loop can't be undone — see the fundamental group below), a circle and a figure-eight (one loop vs. two), a circle and a sphere (a loop vs. a cavity). And the pairs above — disk vs. point, punctured plane vs. circle — are homotopy equivalent but not homeomorphic (they don't even have the same dimension), so the two notions genuinely differ.
+Examples that are *not* homotopy equivalent: a point and a circle (the circle's loop can't be undone — see the fundamental group below), a circle and a figure-eight (one loop vs. two), a circle and a sphere (a loop vs. a cavity). And the pairs above — disk vs. point, punctured plane vs. circle — are homotopy equivalent but not homeomorphic (they don't have the same dimension, which is a theorem for homeomorphisms to exist), so the two notions genuinely differ.
 
 Finally, the phrase we'll use constantly: *homotopy equivalent to a point* means exactly what it says — there are maps back and forth between $X$ and a one-point space whose composites are homotopic to identities. Unwinding the definition, it means $\mathrm{id}_X$ is homotopic to a constant map: the whole space can be continuously squashed to a single point within itself.
 
@@ -82,13 +84,13 @@ Homeomorphic implies homotopy equivalent, never the reverse ($\mathbb{R}^n$ and 
 
 ## Fundamental groups, and $\pi_n$
 
-So far "hole" has been informal. The fundamental group makes it algebra. Fix a basepoint $x_0 \in X$. A *loop* is a continuous $\gamma : [0,1] \to X$ with $\gamma(0) = \gamma(1) = x_0$, and we consider loops up to homotopy that keep the endpoints pinned. Observe that concatenation of loops makes the set of homotopy classes a group:
+So far "hole" has been informal. The fundamental group makes it algebra. Fix a basepoint $x_0 \in X$. A loop is a continuous $\gamma : [0,1] \to X$ with $\gamma(0) = \gamma(1) = x_0$, and we consider loops up to homotopy that keep the endpoints pinned. Observe that concatenation of loops makes the set of homotopy classes a group:
 
 $$
 \pi_1(X, x_0) = \{\text{loops at } x_0\}/\simeq.
 $$
 
-The identity is the constant loop, and the inverse of a loop is the same loop run backwards. In a contractible space every loop contracts, so $\pi_1 = 0$. In the punctured plane, a loop around the puncture is stuck:
+The identity is the constant loop, and the group inverse of a loop is the same loop run backwards in "time". In a contractible space every loop contracts, so $\pi_1 = 0$. In the punctured plane, a loop around the puncture is stuck:
 
 ![Left: a loop that misses the hole contracts. Right: a loop around the hole cannot — any contraction would have to cross the missing point. That loop is a nontrivial element of $\pi_1$.](figures/loop_snag_light.gif)
 
@@ -96,7 +98,7 @@ Since the punctured plane is homotopy equivalent to $S^1$, its fundamental group
 
 ![Winding number: this loop wraps the circle twice, so it represents $2 \in \mathbb{Z} \cong \pi_1(S^1)$. No deformation changes the count.](figures/winding_light.gif)
 
-What about the basepoint? Here is a basic theorem: if $x_0$ and $x_1$ are connected by a path $h$, then
+What about the basepoint? First define a path as a continous function from $[0,1]$ to a topological space $X$ (a loop without the ends having to meet). Now here's a basic theorem: if $x_0$ and $x_1$ in $X$ are connected by a path $h: [0,1] \mapsto X$, then
 
 $$
 \pi_1(X, x_1) \xrightarrow{\ \cong\ } \pi_1(X, x_0), \qquad [\gamma] \mapsto [\,h \cdot \gamma \cdot \bar{h}\,],
@@ -104,7 +106,7 @@ $$
 
 where $h \cdot \gamma \cdot \bar{h}$ means "walk along $h$, do the loop, walk back." So in a path-connected space the fundamental group is one group up to isomorphism, and we drop the basepoint from the notation. (The isomorphism itself can depend on the choice of path — two paths that differ by a loop conjugate the answer — but the group is the same.)
 
-Replacing the loop $[0,1] \to X$ with a map from the $n$-sphere gives the *higher homotopy groups* $\pi_n(X)$: $\pi_2$ probes with balloons instead of loops, and so on. The torus and the sphere make a clean contrast. On the torus, loops detect two independent holes:
+Replacing the loop $[0,1] \to X$ with a map from the $n$-sphere gives the higher homotopy groups $\pi_n(X)$: $\pi_2$ probes with balloons instead of loops, and so on. The torus and the sphere make a clean contrast. On the torus, loops detect two independent holes:
 
 ![The torus has two independent non-contractible loops — around the tube and around the central hole — and $\pi_1(T^2) \cong \mathbb{Z}^2$.](figures/torus_loops_light.gif)
 
@@ -112,7 +114,7 @@ On the sphere every loop contracts, so $\pi_1(S^2) = 0$:
 
 ![Every loop on the sphere slides up and contracts: $\pi_1(S^2) = 0$. Loops are the wrong probe for this space.](figures/sphere_loop_light.gif)
 
-But the sphere encloses a cavity, and a *sphere-shaped* probe sees it — visualized most easily in $\mathbb{R}^3 \setminus \{0\}$, which is homotopy equivalent to $S^2$ by the same radial retraction as before:
+But the sphere encloses a cavity, and a sphere-shaped probe sees it — visualized most easily in $\mathbb{R}^3 \setminus \{0\}$, which is homotopy equivalent to $S^2$ by the same radial retraction as before:
 
 ![A sphere around a missing point in $\mathbb{R}^3$ can't shrink away — a nontrivial element of $\pi_2$. One caution: for the torus this group is trivial; its two holes are both loop-type, not cavity-type.](figures/sphere_pi2_light.gif)
 
@@ -205,7 +207,7 @@ This is the object that will let us say "the data has a hole" in a way a compute
 
 ## The nerve lemma
 
-**Nerve lemma.** If $\mathcal{U}$ is a good open cover of a paracompact space $X$ (any closed subspace of $\mathbb{R}^n$), then the nerve is homotopy equivalent to the space:
+*Nerve lemma.* If $\mathcal{U}$ is a good open cover of a paracompact space $X$ (any closed subspace of $\mathbb{R}^n$), then the nerve is homotopy equivalent to the space:
 
 $$
 N(\mathcal{U}) \simeq X.
