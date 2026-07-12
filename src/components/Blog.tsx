@@ -17,8 +17,8 @@ export default function Blog() {
         <p className="eyebrow">Blog</p>
         <h1 className="section-title">Notes &amp; essays</h1>
         <p className="blog__intro">
-          Longer-form writing on math and machine learning — mostly the ideas behind my
-          research, worked out slowly and with pictures.
+          Longer-form writing on math and machine learning. The posts are mostly about ideas behind my
+          research with relevant theory explained.
         </p>
 
         <ul className="blog__list">
