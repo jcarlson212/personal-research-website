@@ -4,8 +4,37 @@ import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
 import rehypeKatex from 'rehype-katex'
+import katex from 'katex'
 import 'katex/dist/katex.min.css'
 import { getPost, formatDate } from '../data/blog'
+
+/**
+ * Figure captions come from image alt text. remark-math consumes the `$...$`
+ * delimiters inside image labels but leaves the alt as plain text, so the
+ * caption must be re-extracted from the raw markdown (via node positions)
+ * and its math typeset here.
+ */
+function Caption({ text }: { text: string }) {
+  const parts = text.split(/(\$[^$]+\$)/g)
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.length > 2 && part.startsWith('$') && part.endsWith('$') ? (
+          <span
+            key={i}
+            dangerouslySetInnerHTML={{
+              __html: katex.renderToString(part.slice(1, -1), {
+                throwOnError: false,
+              }),
+            }}
+          />
+        ) : (
+          part
+        ),
+      )}
+    </>
+  )
+}
 
 /**
  * Figure with automatic theme variants: a src ending in `_light.<ext>` also
@@ -13,7 +42,18 @@ import { getPost, formatDate } from '../data/blog'
  * theme. Rendered with spans (not <figure>) because react-markdown places
  * images inside <p> elements.
  */
-function PostImage({ src, alt, slug }: { src?: string; alt?: string; slug: string }) {
+function PostImage({
+  src,
+  alt,
+  rawAlt,
+  slug,
+}: {
+  src?: string
+  alt?: string
+  /** Caption as written in the markdown source, `$...$` intact. */
+  rawAlt?: string
+  slug: string
+}) {
   if (!src) return null
   const resolved = /^(https?:)?\//.test(src) ? src : `/blog_posts/${slug}/${src}`
   const isThemed = /_light\.[a-z]+$/i.test(resolved)
@@ -28,7 +68,11 @@ function PostImage({ src, alt, slug }: { src?: string; alt?: string; slug: strin
           className="fig-dark"
         />
       )}
-      {alt && <span className="post__figcaption">{alt}</span>}
+      {(rawAlt ?? alt) && (
+        <span className="post__figcaption">
+          <Caption text={(rawAlt ?? alt)!} />
+        </span>
+      )}
     </span>
   )
 }
@@ -100,7 +144,24 @@ export default function BlogPost() {
               remarkPlugins={[remarkMath, remarkGfm]}
               rehypePlugins={[rehypeKatex]}
               components={{
-                img: (props) => <PostImage src={props.src} alt={props.alt} slug={post.slug} />,
+                img: (props) => {
+                  // Recover the caption exactly as written (with $...$)
+                  // from the image's source span in the markdown.
+                  let rawAlt: string | undefined
+                  const pos = props.node?.position
+                  if (pos?.start.offset != null && pos.end.offset != null) {
+                    const span = markdown.slice(pos.start.offset, pos.end.offset)
+                    rawAlt = span.match(/^!\[([\s\S]*)\]\(/)?.[1]
+                  }
+                  return (
+                    <PostImage
+                      src={props.src}
+                      alt={props.alt}
+                      rawAlt={rawAlt}
+                      slug={post.slug}
+                    />
+                  )
+                },
               }}
             >
               {markdown}
