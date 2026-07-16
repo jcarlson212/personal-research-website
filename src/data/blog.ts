@@ -14,6 +14,14 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'computing_homology',
+    title: 'Homology / Cohomology Computation Warmup for Grid Worlds',
+    date: '2026-07-14',
+    summary:
+      'One fixed template — simplexes, chain groups, boundary and coboundary matrices, homology and cohomology — run on seventeen spaces: from a single point through tori, Klein bottles, and projective spaces, with filtrations and persistence diagrams for the simple shapes and a closing look at what GUDHI actually computes.',
+    tags: ['Topology', 'Math'],
+  },
+  {
     slug: 'basic_topology_and_symmetric_simplexes',
     title: 'Basic Topology and Symmetric Simplexes',
     date: '2026-07-05',
