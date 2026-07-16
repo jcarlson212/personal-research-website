@@ -106,10 +106,9 @@ const garrychess: Program = {
     {
       index: 2,
       label: 'Paper 2',
-      title:
-        'Elo-Disentangled Player-Style Embeddings via a Rating-Conditioned Residual Move Model',
+      title: 'Matilda: Engine-Agnostic Search with Human Policy Guidance',
       status: 'preprint',
-      venue: 'Preprint on arXiv · targeting AAAI 2027',
+      venue: 'Preprint on arXiv · AAAI submission pending',
       summary:
         'A compact per-player embedding that captures style disentangled from strength (linear probe recovers rating at only R²=0.06). A rating-conditioned base model — Maia-3 policy plus Stockfish features — explains rating-typical play; a frozen residual leaves the embedding to encode only how a player deviates.',
       href: 'https://arxiv.org/abs/2606.25176',
@@ -313,10 +312,9 @@ export const publications: Publication[] = [
     href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing',
   },
   {
-    title:
-      'Elo-Disentangled Player-Style Embeddings via a Rating-Conditioned Residual Move Model',
+    title: 'Matilda: Engine-Agnostic Search with Human Policy Guidance',
     authors: 'J. Carlson',
-    venue: 'Preprint on arXiv (targeting AAAI 2027)',
+    venue: 'Preprint on arXiv (AAAI submission pending)',
     year: '2026',
     status: 'preprint',
     href: 'https://arxiv.org/abs/2606.25176',
