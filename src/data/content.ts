@@ -142,18 +142,20 @@ const topology: Program = {
       status: 'software',
       venue: 'Open-source Python library · Gymnasium API',
       summary:
-        'Gridworld environments generated on topologically unique manifolds — torus, Möbius band, Klein bottle, RP², sphere, 3-torus — with certified Betti numbers computed from the free-space complex at generation time. Contains benchmark suites for RL algorithms to compare on tasks like exploration.',
+        'Gridworld environments whose shape — chambers, decoys, loops, and edge identifications — is certified at generation time from the free-space cell complex, with everything deterministic up to seeds. One benchmark, TopoGym-v1, in three slices: GridWorld2D families varying size, chamber and decoy count, shape, nesting, and bottlenecks; Texture environments with semantic local signals that fail in controlled ways; and Top environments on the cylinder, Möbius band, torus, Klein bottle, and RP² with zero local signal. Includes trajectory-level TDA tools for measuring what an agent actually discovered.',
       href: 'https://github.com/jcarlson212/TopoGym',
       images: [
-        { src: '/topogym/square-holes.svg', alt: 'Square environment with holes' },
-        { src: '/topogym/annulus.svg', alt: 'Annulus environment' },
-        { src: '/topogym/torus-rooms.svg', alt: 'Torus environment with hidden rooms' },
-        { src: '/topogym/mobius-rooms.svg', alt: 'Möbius band environment with hidden rooms' },
-        { src: '/topogym/klein-rooms.svg', alt: 'Klein bottle environment with hidden rooms' },
-        { src: '/topogym/sphere-rooms.svg', alt: 'Sphere environment with hidden rooms' },
+        { src: '/topogym/iceship.gif', alt: 'EnvironmentalIceShip: ship in an ice field where winter freezes the channel shut' },
+        { src: '/topogym/clown-chase.gif', alt: 'ClownChase: wandering distractor paying a depleting trickle of reward' },
+        { src: '/topogym/space-warp.gif', alt: 'SpaceWarp: doorless treasure chamber reachable only through one wormhole among thirty' },
+        { src: '/topogym/dont-fall.gif', alt: 'DontFall: forest ring around a fatal drop where the most novel direction is the worst one' },
+        { src: '/topogym/search-rescue.gif', alt: 'SearchRescue: trapped survivor in the only large persistent hole of a shrapnel field' },
+        { src: '/topogym/bank-robber.gif', alt: 'BankRobber environment' },
+        { src: '/topogym/nested3.gif', alt: 'Nested3: three nested chambers with hidden doors' },
+        { src: '/topogym/top-torus.gif', alt: 'TopTorus: torus world with identified edges drawn as fundamental-polygon arrows' },
       ],
       imagesCaption:
-        'From the 2D benchmark suite: square with holes, annulus, torus, Möbius band, Klein bottle, sphere. Walls gray, holes black, hidden doors purple, decoys dark red, start blue, goal green.',
+        'From the TopoGym-v1 gallery: EnvironmentalIceShip, ClownChase, SpaceWarp, DontFall, SearchRescue, BankRobber, Nested3, TopTorus. Rendering dims everything outside the agent’s line of sight; hidden structure is revealed on demand.',
     },
     {
       index: 2,
