@@ -1115,3 +1115,67 @@
     display: none;
   }
 }
+
+/* ---- Acknowledgements page -------------------------------------------- */
+.acks__intro {
+  color: var(--text-secondary);
+  max-width: 44rem;
+  margin-top: calc(-1 * var(--sp-4));
+  margin-bottom: var(--sp-6);
+}
+.acks__list {
+  display: flex;
+  flex-direction: column;
+  max-width: 44rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.acks__item {
+  display: flex;
+  gap: var(--sp-5);
+  align-items: flex-start;
+  padding-block: var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+.acks__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+.acks__photo {
+  flex: 0 0 auto;
+  width: 5.5rem;
+  height: 5.5rem;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+@media (max-width: 640px) {
+  .acks__photo {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+.acks__item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+.acks__name {
+  font-weight: 600;
+  color: var(--text);
+}
+.acks__link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+}
+.acks__link:hover {
+  color: var(--accent);
+}
+.acks__note {
+  color: var(--text-secondary);
+  line-height: 1.55;
+}

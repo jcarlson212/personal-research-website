@@ -41,6 +41,9 @@ export default function Nav() {
           <Link to="/blog" className="nav__link nav__link--blog">
             Blog
           </Link>
+          <Link to="/acknowledgements" className="nav__link nav__link--blog">
+            Thanks
+          </Link>
         </nav>
 
         <ThemeToggle />

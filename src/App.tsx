@@ -12,6 +12,7 @@ import Contact from './components/Contact'
 // Code-split the blog: KaTeX + markdown rendering stay out of the home bundle.
 const Blog = lazy(() => import('./components/Blog'))
 const BlogPost = lazy(() => import('./components/BlogPost'))
+const Acknowledgements = lazy(() => import('./components/Acknowledgements'))
 
 /** Scroll to the hash target after in-app navigation (e.g. /#about from /blog). */
 function ScrollToHash() {
@@ -55,6 +56,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/acknowledgements" element={<Acknowledgements />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>
