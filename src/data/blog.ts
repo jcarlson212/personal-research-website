@@ -14,6 +14,14 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'a_tour_of_topogym',
+    title: 'A Tour of TopoGym',
+    date: '2026-08-21',
+    summary:
+      'A walk through TopoGym\'s features with visual aids, starting from the certified topology of a single world and ending with a complete single-layout exploration study.',
+    tags: ['Topology', 'Reinforcement Learning', 'Software'],
+  },
+  {
     slug: 'computing_homology',
     title: 'Homology / Cohomology Computation Warmup for Grid Worlds',
     date: '2026-07-14',
