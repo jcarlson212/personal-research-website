@@ -4,7 +4,10 @@ import { GitHub, LinkedIn, Mail, Document, ArrowUpRight } from './icons'
 export default function Hero() {
   return (
     <section className="hero section--flush" id="top">
-      <div className="container">
+      <div className="container hero__inner">
+        <span className="hero__photo">
+          <img src={profile.photo} alt={profile.name} width={440} height={440} />
+        </span>
         <p className="hero__eyebrow">{profile.location}</p>
         <h1 className="hero__name">{profile.name}</h1>
         <p className="hero__title">{profile.title}</p>

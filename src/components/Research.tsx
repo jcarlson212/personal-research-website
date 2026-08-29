@@ -117,6 +117,18 @@ function ProgramCard({ program }: { program: Program }) {
               </h4>
               <p className="stage__venue">{s.venue}</p>
               <p className="stage__summary">{s.summary}</p>
+              {s.figure && (
+                <figure className="stage__figure">
+                  <img
+                    src={s.figure.src}
+                    alt={s.figure.alt}
+                    loading="lazy"
+                  />
+                  <figcaption className="stage__figure-caption">
+                    {s.figure.caption}
+                  </figcaption>
+                </figure>
+              )}
               {s.images && (
                 <figure className="stage__gallery">
                   <div className="stage__gallery-grid">

@@ -25,8 +25,9 @@ export const profile = {
   name: 'Jason Carlson',
   title: 'AI Research Engineer',
   location: 'New York, NY',
+  photo: '/profile.jpg',
   tagline:
-    'I work on two threads: human-like decision making in chess using fine-tuning & RL, and exploration for applications like robotics using topological navigation.',
+    'I work on two threads: topology-guided exploration for applications like robotics, and using human policies to guide exploration in chess toward more human-like models.',
   email: 'jcarlson212@gmail.com',
   links: {
     github: 'https://github.com/jcarlson212',
@@ -39,14 +40,14 @@ export const profile = {
 export const about = {
   paragraphs: [
     "I'm an ML research engineer in New York. For the last five years I've built and deployed large-scale machine-learning and reinforcement-learning systems in production — credit-risk models, distributed inference serving over a billion embeddings a day, and safety-constrained RL — first at Amazon and AppLovin, and now as an independent researcher.",
-    'My research is focused on two things at the moment. The first is human-like decision making in structured decision domains like chess using techniques like fine-tuning, attention, and reinforcement learning.',
-    'The second thread is exploration — how an agent should seek out novel candidate spaces using topology-guided exploration. For a long time RL has been contrained by optimizing within a narrow, non-contractible, incomplete region of space – the hope with my new algorithms is they produce sample-efficient learning through optimizing within the correct domain from conception for applications like robotics.',
+    'My research is focused on two things at the moment. The first is exploration — how an agent should seek out novel candidate spaces using topology-guided exploration. For a long time RL has been contrained by optimizing within a narrow, non-contractible, incomplete region of space – the hope with my new algorithms is they produce sample-efficient learning through optimizing within the correct domain from conception for applications like robotics.',
+    'The second thread carries the same question into chess: using human policies to guide exploration over candidate moves, so that what a model searches — not only what it imitates — is shaped by how a particular person plays. The aim is models that are human-like because of where they look, rather than because they were fit to human moves after the fact.',
     'I hold an M.A. in Mathematics (4.0) and a B.S. in Computer Science (3.9) and B.S. in Mathematics from Arizona State University, with graduate coursework in analysis, topology, and abstract algebra.',
   ],
   interests: [
-    'Personalized policies (LLM fine-tuning + RL)',
-    'Preference optimization (DPO variants)',
     'Topological navigation',
+    'Exploration in RL',
+    'Human-guided search',
     'Representation learning',
     'Clinical ML & reasoning fidelity',
   ],
@@ -66,6 +67,8 @@ export interface ProgramStage {
   href?: string
   images?: { src: string; alt: string }[]
   imagesCaption?: string
+  /** A single result figure, rendered larger than the gallery grid. */
+  figure?: { src: string; alt: string; caption: string }
 }
 
 export interface Program {
@@ -80,12 +83,12 @@ export interface Program {
 }
 
 const garrychess: Program = {
-  kicker: 'Research program · Decision-making',
+  kicker: 'Research program · Human-guided search',
   name: 'GarryChess',
   url: 'https://www.garrychess.ai',
   urlLabel: 'garrychess.ai',
   blurb:
-    'A multi-year research program on modeling individual human chess play — how a specific person, at a specific strength, actually chooses their moves. Three connected papers build from imitation, to disentangled style, to adaptive engine search.',
+    'A multi-year research program on using human policies to guide exploration in chess — letting a model of how a specific person plays decide which moves are worth searching at all. Three connected papers move from imitation, to a style representation disentangled from strength, to a learned controller that spends engine search where that person would look.',
   video: {
     src: '/reinforcement_learning_human_chess_example.mp4',
     caption:
@@ -110,7 +113,7 @@ const garrychess: Program = {
       status: 'preprint',
       venue: 'Preprint on arXiv · AAAI submission pending',
       summary:
-        'A compact per-player embedding that captures style disentangled from strength (linear probe recovers rating at only R²=0.06). A rating-conditioned base model — Maia-3 policy plus Stockfish features — explains rating-typical play; a frozen residual leaves the embedding to encode only how a player deviates.',
+        'Matilda decouples search from neural human-policy priors, then recombines them through a residual re-ranker to achieve state-of-the-art elite chess move prediction (+18.5% over Maia-3 23M).',
       href: 'https://arxiv.org/abs/2606.25176',
     },
     {
@@ -165,6 +168,12 @@ const topology: Program = {
       venue: 'In preparation',
       summary:
         'Proof of concept for topology-guided exploration in simple grid spaces, building on top of the work of Go-Explore in hard RL exploration and evaluated on the TopoGym benchmarks.',
+      figure: {
+        src: '/topoexplore/solve-profile.png',
+        alt: 'Solve profile: fraction of TopoGym worlds solved against training steps, comparing Go-Explore with three TopoExplore variants. All three TopoExplore curves rise faster and settle higher than Go-Explore.',
+        caption:
+          'Preview of work in progress — solve profile over a few dozen TopoGym worlds, several seeds each; bands are the spread across seeds. The coverage Go-Explore reaches at 1M steps is matched by TopoExplore at about 0.5M, and by the curvature variants at about 0.3M. Curvature does nearly all of that work — TE + both tracks it closely.',
+      },
     },
     {
       index: 3,
@@ -173,12 +182,12 @@ const topology: Program = {
       status: 'planned',
       venue: 'Planned',
       summary:
-        'If TopoExplore proves out, the plan is to expand to more complicated environments — including world models, through finding exploration opportunities in the latent space.',
+        'If TopoExplore proves out, the plan is to move to robotics environments, where the same exploration machinery applies directly to exploring the real world — and from there to world models, finding exploration opportunities in the latent space.',
     },
   ],
 }
 
-export const programs: Program[] = [garrychess, topology]
+export const programs: Program[] = [topology, garrychess]
 
 /* ---- Other research ------------------------------------------------------ */
 export interface ResearchItem {
