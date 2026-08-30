@@ -812,28 +812,8 @@
 }
 
 /* ----------------------------------------------------------------------------
-   Contact / footer
+   Footer
    -------------------------------------------------------------------------- */
-.contact__title {
-  font-size: var(--fs-2xl);
-  max-width: 32rem;
-  margin-bottom: var(--sp-5);
-}
-.contact__email {
-  display: inline-block;
-  font-size: var(--fs-lg);
-  color: var(--accent);
-  margin-bottom: var(--sp-6);
-  transition: color 0.15s ease;
-}
-.contact__email:hover {
-  color: var(--accent-hover);
-}
-.contact__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-5);
-}
 .footer {
   margin-top: var(--sp-9);
   border-top: 1px solid var(--border);

@@ -8,7 +8,6 @@ const SECTIONS = [
   { id: 'research', label: 'Research' },
   { id: 'publications', label: 'Publications' },
   { id: 'experience', label: 'Experience' },
-  { id: 'contact', label: 'Contact' },
 ]
 
 export default function Nav() {

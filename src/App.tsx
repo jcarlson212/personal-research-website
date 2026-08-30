@@ -7,7 +7,7 @@ import Research from './components/Research'
 import Publications from './components/Publications'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
-import Contact from './components/Contact'
+import Footer from './components/Footer'
 
 // Code-split the blog: KaTeX + markdown rendering stay out of the home bundle.
 const Blog = lazy(() => import('./components/Blog'))
@@ -37,7 +37,7 @@ function Home() {
       <Publications />
       <Experience />
       <Projects />
-      <Contact />
+      <Footer />
     </>
   )
 }
