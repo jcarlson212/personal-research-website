@@ -164,15 +164,16 @@ const topology: Program = {
       index: 2,
       label: 'Paper 1',
       title: 'TopoExplore: Topology-Guided Exploration for RL',
-      status: 'in-preparation',
-      venue: 'In preparation',
+      status: 'preprint',
+      venue: 'Preprint on arXiv',
       summary:
-        'Proof of concept for topology-guided exploration in simple grid spaces, building on top of the work of Go-Explore in hard RL exploration and evaluated on the TopoGym benchmarks.',
+        'TopoExplore uses the holes in the visited space as a signal for where to explore, building on Go-Explore and evaluated on the TopoGym benchmarks.',
+      href: 'https://arxiv.org/pdf/2607.09971',
       figure: {
         src: '/topoexplore/solve-profile.png',
         alt: 'Solve profile: fraction of TopoGym worlds solved against training steps, comparing Go-Explore with three TopoExplore variants. All three TopoExplore curves rise faster and settle higher than Go-Explore.',
         caption:
-          'Preview of work in progress — solve profile over a few dozen TopoGym worlds, several seeds each; bands are the spread across seeds. The coverage Go-Explore reaches at 1M steps is matched by TopoExplore at about 0.5M, and by the curvature variants at about 0.3M. Curvature does nearly all of that work — TE + both tracks it closely.',
+          'Solve profile over a few dozen TopoGym worlds, several seeds each; bands are the spread across seeds. The coverage Go-Explore reaches at 1M steps is matched by TopoExplore at about 0.5M, and by the curvature variants at about 0.3M. Curvature does nearly all of that work — TE + both tracks it closely.',
       },
     },
     {
