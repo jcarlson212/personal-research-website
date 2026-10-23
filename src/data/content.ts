@@ -25,13 +25,14 @@ export const profile = {
   name: 'Jason Carlson',
   title: 'AI Research Engineer',
   location: 'New York, NY',
-  photo: '/profile.jpg',
+  photo: '/profile_oct_23.jpg',
   tagline:
-    'I work on two threads: topology-guided exploration for applications like robotics, and using human policies to guide exploration in chess toward more human-like models.',
+    'I work on exploration, with the long-run aim of robots that can take part in everyday life: topology-guided exploration that finds the gaps in what a robot has tried, and human-guided search in chess that models how a particular person thinks.',
   email: 'jcarlson212@gmail.com',
   links: {
     github: 'https://github.com/jcarlson212',
     linkedin: 'https://www.linkedin.com/in/jason-carlson-sde',
+    scholar: 'https://scholar.google.com/citations?user=Z2rbMF8AAAAJ&hl=en',
     cv: '/cv.pdf',
   },
 }
@@ -40,8 +41,8 @@ export const profile = {
 export const about = {
   paragraphs: [
     "I'm an ML research engineer in New York. For the last five years I've built and deployed large-scale machine-learning and reinforcement-learning systems in production — credit-risk models, distributed inference serving over a billion embeddings a day, and safety-constrained RL — first at Amazon and AppLovin, and now as an independent researcher.",
-    'My research is focused on two things at the moment. The first is exploration — how an agent should seek out novel candidate spaces using topology-guided exploration. For a long time RL has been contrained by optimizing within a narrow, non-contractible, incomplete region of space – the hope with my new algorithms is they produce sample-efficient learning through optimizing within the correct domain from conception for applications like robotics.',
-    'The second thread carries the same question into chess: using human policies to guide exploration over candidate moves, so that what a model searches — not only what it imitates — is shaped by how a particular person plays. The aim is models that are human-like because of where they look, rather than because they were fit to human moves after the fact.',
+    "My research is on exploration: how an agent should find the parts of a problem it has not yet tried. The first thread uses topology to find gaps that an agent's experience surrounds but has never entered — an untried grasp, or a room it has walked around but never gone into — so that robots can generate their own training data instead of relying on thousands of hours of demonstrations. In the long run, the same idea points toward robots that learn with people: noticing what they don't yet know about the people they work with, and asking at the right moment rather than acting on their own assumptions.",
+    "The second thread studies that human side directly, in chess, where a person's decisions are recorded move by move: using human policies to guide which moves a model searches, so that what it explores — not only what it imitates — is shaped by how a particular person plays. Models that are human-like because of where they look, rather than because they were fit to human moves after the fact, are a step toward agents that can anticipate and work with the people around them.",
     'I hold an M.A. in Mathematics (4.0) and a B.S. in Computer Science (3.9) and B.S. in Mathematics from Arizona State University, with graduate coursework in analysis, topology, and abstract algebra.',
   ],
   interests: [
@@ -111,7 +112,7 @@ const garrychess: Program = {
       label: 'Paper 2',
       title: 'Matilda: Engine-Agnostic Search with Human Policy Guidance',
       status: 'preprint',
-      venue: 'Preprint on arXiv · AAAI submission pending',
+      venue: 'Preprint on arXiv · Under review at AAAI 2027 (Phase 2)',
       summary:
         'Matilda decouples search from neural human-policy priors, then recombines them through a residual re-ranker to achieve state-of-the-art elite chess move prediction (+18.5% over Maia-3 23M).',
       href: 'https://arxiv.org/abs/2606.25176',
@@ -163,12 +164,12 @@ const topology: Program = {
     {
       index: 2,
       label: 'Paper 1',
-      title: 'TopoExplore: Topology-Guided Exploration for RL',
+      title: 'TopoExplore: Homology as an Exploration Signal',
       status: 'preprint',
-      venue: 'Preprint on arXiv',
+      venue: 'Preprint on arXiv · Under review at ICLR 2027',
       summary:
         'TopoExplore uses the holes in the visited space as a signal for where to explore, building on Go-Explore and evaluated on the TopoGym benchmarks.',
-      href: 'https://arxiv.org/pdf/2607.09971',
+      href: 'https://arxiv.org/abs/2607.09971',
       figure: {
         src: '/topoexplore/solve-profile.png',
         alt: 'Solve profile: fraction of TopoGym worlds solved against training steps, comparing Go-Explore with three TopoExplore variants. All three TopoExplore curves rise faster and settle higher than Go-Explore.',
@@ -315,6 +316,14 @@ export interface Publication {
 
 export const publications: Publication[] = [
   {
+    title: 'TopoExplore: Homology as an Exploration Signal',
+    authors: 'J. Carlson',
+    venue: 'Under review at ICLR 2027',
+    year: '2026',
+    status: 'preprint',
+    href: 'https://arxiv.org/abs/2607.09971',
+  },
+  {
     title:
       'Beyond Imitation: Preference-Optimized Policies for Realistic Grandmaster Chess',
     authors: 'J. Carlson, et al.',
@@ -326,7 +335,7 @@ export const publications: Publication[] = [
   {
     title: 'Matilda: Engine-Agnostic Search with Human Policy Guidance',
     authors: 'J. Carlson',
-    venue: 'Preprint on arXiv (AAAI submission pending)',
+    venue: 'Under review at AAAI 2027 (Phase 2)',
     year: '2026',
     status: 'preprint',
     href: 'https://arxiv.org/abs/2606.25176',
@@ -353,5 +362,5 @@ export const publications: Publication[] = [
 
 export const meta = {
   /** Bump when content changes meaningfully. */
-  updated: 'July 2026',
+  updated: 'October 2026',
 }

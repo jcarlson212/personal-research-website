@@ -1,5 +1,5 @@
 import { profile } from '../data/content'
-import { GitHub, LinkedIn, Mail, Document, ArrowUpRight } from './icons'
+import { GitHub, LinkedIn, Scholar, Mail, Document, ArrowUpRight } from './icons'
 
 export default function Hero() {
   return (
@@ -47,6 +47,17 @@ export default function Hero() {
               rel="noopener noreferrer"
             >
               <LinkedIn size={16} /> <span>LinkedIn</span>
+              <ArrowUpRight size={13} className="social__ext" />
+            </a>
+          </li>
+          <li>
+            <a
+              href={profile.links.scholar}
+              className="social"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Scholar size={16} /> <span>Google Scholar</span>
               <ArrowUpRight size={13} className="social__ext" />
             </a>
           </li>

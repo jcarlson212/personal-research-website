@@ -19,3 +19,6 @@ pnpm-debug.log*
 .idea
 *.local
 .topogym_test_venv/
+
+# private drafts (research statement, etc.)
+private/
