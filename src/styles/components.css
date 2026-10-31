@@ -505,13 +505,21 @@
 }
 .stage__gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
   gap: var(--sp-2);
+}
+@media (max-width: 640px) {
+  .stage__gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .stage__gallery-grid img {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: calc(var(--radius) / 2);
   border: 1px solid var(--border);
 }

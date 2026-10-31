@@ -146,20 +146,20 @@ const topology: Program = {
       status: 'software',
       venue: 'Open-source Python library · Gymnasium API',
       summary:
-        'Gridworld environments whose shape — chambers, decoys, loops, and edge identifications — is certified at generation time from the free-space cell complex, with everything deterministic up to seeds. One benchmark, TopoGym-v1, in three slices: GridWorld2D families varying size, chamber and decoy count, shape, nesting, and bottlenecks; Texture environments with semantic local signals that fail in controlled ways; and Top environments on the cylinder, Möbius band, torus, Klein bottle, and RP² with zero local signal. Includes trajectory-level TDA tools for measuring what an agent actually discovered.',
+        'A suite of 2D gridworld and continuous environments for testing sparse-reward RL algorithms.',
       href: 'https://github.com/jcarlson212/TopoGym',
       images: [
+        { src: '/topogym/missions/orbital-dock.gif', alt: 'OrbitDock: a thruster craft finding the docking chamber through a bottleneck' },
+        { src: '/topogym/missions/lava-braid.gif', alt: 'LavaBraid3: a rover in a lava tube braided into three loops' },
+        { src: '/topogym/missions/underice-cavity.gif', alt: 'IceKeelCavity: an underwater vehicle searching for a cavity behind an ice keel' },
+        { src: '/topogym/missions/uav-rubble.gif', alt: 'RubbleVoids: a drone searching the voids of a rubble field' },
         { src: '/topogym/iceship.gif', alt: 'EnvironmentalIceShip: ship in an ice field where winter freezes the channel shut' },
-        { src: '/topogym/clown-chase.gif', alt: 'ClownChase: wandering distractor paying a depleting trickle of reward' },
         { src: '/topogym/space-warp.gif', alt: 'SpaceWarp: doorless treasure chamber reachable only through one wormhole among thirty' },
-        { src: '/topogym/dont-fall.gif', alt: 'DontFall: forest ring around a fatal drop where the most novel direction is the worst one' },
-        { src: '/topogym/search-rescue.gif', alt: 'SearchRescue: trapped survivor in the only large persistent hole of a shrapnel field' },
-        { src: '/topogym/bank-robber.gif', alt: 'BankRobber environment' },
         { src: '/topogym/nested3.gif', alt: 'Nested3: three nested chambers with hidden doors' },
         { src: '/topogym/top-torus.gif', alt: 'TopTorus: torus world with identified edges drawn as fundamental-polygon arrows' },
       ],
       imagesCaption:
-        'From the TopoGym-v1 gallery: EnvironmentalIceShip, ClownChase, SpaceWarp, DontFall, SearchRescue, BankRobber, Nested3, TopTorus. Rendering dims everything outside the agent’s line of sight; hidden structure is revealed on demand.',
+        'Top: 2DContinuousMissions (preview), continuous missions with physical bodies whose topology is certified per body: OrbitDock, LavaBraid3, IceKeelCavity, RubbleVoids. Bottom: the TopoGym-v1 gridworlds EnvironmentalIceShip, SpaceWarp, Nested3, TopTorus.',
     },
     {
       index: 2,
