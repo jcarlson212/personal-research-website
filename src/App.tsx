@@ -5,6 +5,7 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Research from './components/Research'
 import Publications from './components/Publications'
+import Talks from './components/Talks'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Footer from './components/Footer'
@@ -35,6 +36,7 @@ function Home() {
       <About />
       <Research />
       <Publications />
+      <Talks />
       <Experience />
       <Projects />
       <Footer />

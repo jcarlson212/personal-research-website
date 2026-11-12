@@ -272,6 +272,23 @@ export const education = [
   },
 ]
 
+/* ---- Talks & videos ----------------------------------------------------- */
+export interface Talk {
+  title: string
+  year: string
+  summary: string
+  youtubeId: string
+}
+
+export const talks: Talk[] = [
+  {
+    title: 'Trust Region Policy Optimization',
+    year: '2026',
+    summary: 'A video explaining Trust Region Policy Optimization (Schulman et al., 2017).',
+    youtubeId: 'OFgpPEjyJew',
+  },
+]
+
 /* ---- Selected earlier projects ------------------------------------------ */
 export interface Project {
   name: string
