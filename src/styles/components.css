@@ -530,6 +530,41 @@
   color: var(--text-muted);
 }
 
+.stage__demos {
+  margin-top: var(--sp-4);
+  max-width: 44rem;
+}
+.stage__demos-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-2);
+}
+.stage__demos-tab {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.stage__demos-tab:hover {
+  color: var(--text-secondary);
+}
+.stage__demos-tab.is-active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.stage__demos-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius) / 2);
+  border: 1px solid var(--border);
+}
+
 /* ----------------------------------------------------------------------------
    Other research grid
    -------------------------------------------------------------------------- */

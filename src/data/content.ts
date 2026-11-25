@@ -70,6 +70,9 @@ export interface ProgramStage {
   imagesCaption?: string
   /** A single result figure, rendered larger than the gallery grid. */
   figure?: { src: string; alt: string; caption: string }
+  /** Wide comparison clips, shown one at a time behind task tabs. */
+  demos?: { label: string; src: string; alt: string }[]
+  demosCaption?: string
 }
 
 export interface Program {
@@ -179,12 +182,30 @@ const topology: Program = {
     },
     {
       index: 3,
+      label: 'Paper 2',
+      title: 'Minimum Spanning Persistence Trees for Robotics',
+      status: 'in-preparation',
+      venue: 'In preparation for RSS 2027 · Draft ready for the extended-abstract submission',
+      summary:
+        'Takes the multi-scale view from persistent homology into robot learning: rewarding an agent for covering its state space at many resolutions at once, rather than at one fixed scale, alongside the task itself. Evaluated on locomotion and manipulation against standard exploration baselines.',
+      demos: [
+        { label: 'Walker', src: '/mspt/walker.gif', alt: 'Walker: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Swimmer', src: '/mspt/swimmer.gif', alt: 'Swimmer: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Kitchen · top burner', src: '/mspt/kitchen-top-burner.gif', alt: 'Franka Kitchen top burner: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Kitchen · microwave', src: '/mspt/kitchen-microwave.gif', alt: 'Franka Kitchen microwave: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Trossen strike', src: '/mspt/trossen-strike.gif', alt: 'Trossen arm strike: MSPT and five baselines, one evaluation episode each' },
+      ],
+      demosCaption:
+        'MSPT (top left, blue header) against SAC, APT, RND, ICM and Disagreement: the best evaluation episode from each method’s best seed. Green border = goal reached, red = not reached.',
+    },
+    {
+      index: 4,
       label: 'Next',
       title: 'More to come',
       status: 'planned',
       venue: 'Planned',
       summary:
-        'If TopoExplore proves out, the plan is to move to robotics environments, where the same exploration machinery applies directly to exploring the real world — and from there to world models, finding exploration opportunities in the latent space.',
+        'From robotics benchmarks toward world models: finding exploration opportunities in the latent space, and eventually exploring the real world.',
     },
   ],
 }
@@ -379,5 +400,5 @@ export const publications: Publication[] = [
 
 export const meta = {
   /** Bump when content changes meaningfully. */
-  updated: 'October 2026',
+  updated: 'November 2026',
 }

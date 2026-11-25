@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SectionHeader from './SectionHeader'
 import { ArrowUpRight } from './icons'
 import {
@@ -6,6 +6,7 @@ import {
   otherResearch,
   STATUS_LABEL,
   type Program,
+  type ProgramStage,
   type Status,
 } from '../data/content'
 
@@ -49,6 +50,49 @@ function DemoVideo({ src, caption }: { src: string; caption: string }) {
         preload="metadata"
       />
       <figcaption className="flagship__caption">{caption}</figcaption>
+    </figure>
+  )
+}
+
+/** Wide comparison GIFs, one visible at a time so only the chosen clip loads. */
+function DemoTabs({
+  demos,
+  caption,
+}: {
+  demos: NonNullable<ProgramStage['demos']>
+  caption?: string
+}) {
+  const [active, setActive] = useState(0)
+  const demo = demos[active]
+
+  return (
+    <figure className="stage__demos">
+      <div className="stage__demos-tabs" role="tablist" aria-label="Task">
+        {demos.map((d, i) => (
+          <button
+            key={d.src}
+            type="button"
+            role="tab"
+            aria-selected={i === active}
+            className={`stage__demos-tab${i === active ? ' is-active' : ''}`}
+            onClick={() => setActive(i)}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+      <img
+        key={demo.src}
+        className="stage__demos-img"
+        src={demo.src}
+        alt={demo.alt}
+        width={640}
+        height={416}
+        loading="lazy"
+      />
+      {caption && (
+        <figcaption className="stage__gallery-caption">{caption}</figcaption>
+      )}
     </figure>
   )
 }
@@ -128,6 +172,9 @@ function ProgramCard({ program }: { program: Program }) {
                     {s.figure.caption}
                   </figcaption>
                 </figure>
+              )}
+              {s.demos && (
+                <DemoTabs demos={s.demos} caption={s.demosCaption} />
               )}
               {s.images && (
                 <figure className="stage__gallery">
