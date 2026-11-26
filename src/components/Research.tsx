@@ -86,8 +86,6 @@ function DemoTabs({
         className="stage__demos-img"
         src={demo.src}
         alt={demo.alt}
-        width={640}
-        height={416}
         loading="lazy"
       />
       {caption && (

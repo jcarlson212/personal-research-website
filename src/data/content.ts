@@ -196,7 +196,7 @@ const topology: Program = {
         { label: 'Trossen strike', src: '/mspt/trossen-strike.gif', alt: 'Trossen arm strike: MSPT and five baselines, one evaluation episode each' },
       ],
       demosCaption:
-        'MSPT (top left, blue header) against SAC, APT, RND, ICM and Disagreement: the best evaluation episode from each method’s best seed. Green border = goal reached, red = not reached.',
+        'MSPT (top left) against SAC, APT, RND, ICM and Disagreement on the same task.',
     },
     {
       index: 4,
