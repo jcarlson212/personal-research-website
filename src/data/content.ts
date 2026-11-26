@@ -187,7 +187,7 @@ const topology: Program = {
       status: 'in-preparation',
       venue: 'In preparation for RSS 2027 · Draft ready for the extended-abstract submission',
       summary:
-        'Takes the multi-scale view from persistent homology into robot learning: rewarding an agent for covering its state space at many resolutions at once, rather than at one fixed scale, alongside the task itself. Evaluated on locomotion and manipulation against standard exploration baselines.',
+        'An RL exploration paper looking at new ways to use state entropy, evaluated on locomotion and manipulation tasks against standard exploration baselines.',
       demos: [
         { label: 'Walker', src: '/mspt/walker.gif', alt: 'Walker: MSPT and five baselines, one evaluation episode each' },
         { label: 'Swimmer', src: '/mspt/swimmer.gif', alt: 'Swimmer: MSPT and five baselines, one evaluation episode each' },
