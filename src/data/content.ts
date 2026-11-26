@@ -189,11 +189,11 @@ const topology: Program = {
       summary:
         'An RL exploration paper looking at new ways to use state entropy, evaluated on locomotion and manipulation tasks against standard exploration baselines.',
       demos: [
-        { label: 'Walker', src: '/mspt/walker.gif', alt: 'Walker: MSPT and five baselines, one evaluation episode each' },
-        { label: 'Swimmer', src: '/mspt/swimmer.gif', alt: 'Swimmer: MSPT and five baselines, one evaluation episode each' },
-        { label: 'Kitchen · top burner', src: '/mspt/kitchen-top-burner.gif', alt: 'Franka Kitchen top burner: MSPT and five baselines, one evaluation episode each' },
-        { label: 'Kitchen · microwave', src: '/mspt/kitchen-microwave.gif', alt: 'Franka Kitchen microwave: MSPT and five baselines, one evaluation episode each' },
         { label: 'Trossen strike', src: '/mspt/trossen-strike.gif', alt: 'Trossen arm strike: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Kitchen · microwave', src: '/mspt/kitchen-microwave.gif', alt: 'Franka Kitchen microwave: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Swimmer', src: '/mspt/swimmer.gif', alt: 'Swimmer: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Walker', src: '/mspt/walker.gif', alt: 'Walker: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Kitchen · top burner', src: '/mspt/kitchen-top-burner.gif', alt: 'Franka Kitchen top burner: MSPT and five baselines, one evaluation episode each' },
       ],
       demosCaption:
         'MSPT (top left) against SAC, APT, RND, ICM and Disagreement on the same task.',
