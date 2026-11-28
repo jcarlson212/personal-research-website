@@ -3,154 +3,137 @@
    Edit copy, links, and research items here; components render from this.
    ========================================================================== */
 
-export type Status =
-  | 'published'
-  | 'preprint'
-  | 'in-submission'
-  | 'in-preparation'
-  | 'software'
-  | 'planned'
-
-export const STATUS_LABEL: Record<Status, string> = {
-  published: 'Published',
-  preprint: 'Preprint · arXiv',
-  'in-submission': 'In submission',
-  'in-preparation': 'In preparation',
-  software: 'Open source',
-  planned: 'Planned',
-}
-
 /* ---- Profile ------------------------------------------------------------- */
 export const profile = {
   name: 'Jason Carlson',
-  title: 'AI Research Engineer',
-  location: 'New York, NY',
   photo: '/profile_oct_23.jpg',
-  tagline:
-    'I work on exploration, with the long-run aim of robots that can take part in everyday life: topology-guided exploration that finds the gaps in what a robot has tried, and human-guided search in chess that models how a particular person thinks.',
   email: 'jcarlson212@gmail.com',
-  links: {
-    github: 'https://github.com/jcarlson212',
-    linkedin: 'https://www.linkedin.com/in/jason-carlson-sde',
-    scholar: 'https://scholar.google.com/citations?user=Z2rbMF8AAAAJ&hl=en',
-    cv: '/cv.pdf',
+  /** One paragraph. `**text**` renders bold. */
+  bio:
+    "I'm a visiting researcher at NYU working on **exploration in reinforcement learning**. A robot learns well only where its training data lives. My goal is to improve that state-visitation distribution so it is broad and well-structured relative to both the control prior and the task at hand from the start, using the topology of what the agent has already seen. This is to make exploration robust enough to transfer to hard robotics problems such as **manipulation**. Before research, I spent five years building large-scale ML and RL systems at Amazon and AppLovin.",
+  role: 'Visiting Researcher, NYU',
+  links: [
+    { label: 'CV', href: '/cv.pdf' },
+    { label: 'Email', href: 'mailto:jcarlson212@gmail.com' },
+    { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=Z2rbMF8AAAAJ&hl=en' },
+    { label: 'Github', href: 'https://github.com/jcarlson212' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jason-carlson-sde' },
+  ],
+}
+
+/* ---- News (newest first) -------------------------------------------------- */
+export const news: { date: string; text: string; href?: string }[] = [
+  { date: 'Nov 2026', text: 'Submitted an extended abstract to RSS 2027.' },
+  { date: 'Oct 2026', text: 'Joined Benjamin Riviere at NYU as a visiting researcher.' },
+  { date: 'Aug 2026', text: 'New blog post: A Tour of TopoGym.', href: '/blog/a_tour_of_topogym' },
+  { date: 'Jul 2026', text: 'TopoExplore preprint on arXiv; under review at ICLR 2027.', href: 'https://arxiv.org/abs/2607.09971' },
+  { date: 'Jun 2026', text: 'Matilda preprint on arXiv; under review at AAAI 2027.', href: 'https://arxiv.org/abs/2606.25176' },
+  { date: 'May 2026', text: 'Left Amazon to work full-time as an independent researcher.' },
+]
+
+/* ---- Research themes ------------------------------------------------------ */
+export const themes: { name: string; text: string; papers: { label: string; href: string }[] }[] = [
+  {
+    name: 'Exploration in RL',
+    text: 'Exploration methods that use the topological structure of where an agent has already been, from archive-based exploration over topological benchmarks to online RL for locomotion and manipulation.',
+    papers: [
+      { label: 'MSPT', href: '#mspt' },
+      { label: 'TopoExplore', href: '#topoexplore' },
+      { label: 'TopoGym', href: '#topogym' },
+    ],
   },
-}
+  {
+    name: 'Human-guided search',
+    text: 'Using a model of how a specific person plays chess to decide which moves are worth searching, so that what a model explores is shaped by that person. In the longer run: robots that can tell when a gap in their experience is worth a person\'s attention.',
+    papers: [
+      { label: 'Beyond Imitation', href: '#beyond-imitation' },
+      { label: 'Matilda', href: '#matilda' },
+      { label: 'garrychess.ai', href: 'https://www.garrychess.ai' },
+    ],
+  },
+]
 
-/* ---- About / bio --------------------------------------------------------- */
-export const about = {
-  paragraphs: [
-    "I'm an ML research engineer in New York. For the last five years I've built and deployed large-scale machine-learning and reinforcement-learning systems in production — credit-risk models, distributed inference serving over a billion embeddings a day, and safety-constrained RL — first at Amazon and AppLovin, and now as an independent researcher.",
-    "My research is on exploration: how an agent should find the parts of a problem it has not yet tried. The first thread uses topology to find gaps that an agent's experience surrounds but has never entered — an untried grasp, or a room it has walked around but never gone into — so that robots can generate their own training data instead of relying on thousands of hours of demonstrations. In the long run, the same idea points toward robots that learn with people: noticing what they don't yet know about the people they work with, and asking at the right moment rather than acting on their own assumptions.",
-    "The second thread studies that human side directly, in chess, where a person's decisions are recorded move by move: using human policies to guide which moves a model searches, so that what it explores — not only what it imitates — is shaped by how a particular person plays. Models that are human-like because of where they look, rather than because they were fit to human moves after the fact, are a step toward agents that can anticipate and work with the people around them.",
-    'I hold an M.A. in Mathematics (4.0) and a B.S. in Computer Science (3.9) and B.S. in Mathematics from Arizona State University, with graduate coursework in analysis, topology, and abstract algebra.',
-  ],
-  interests: [
-    'Topological navigation',
-    'Exploration in RL',
-    'Human-guided search',
-    'Representation learning',
-    'Clinical ML & reasoning fidelity',
-  ],
-}
-
-/* ---- Research programs ---------------------------------------------------
-   Each program renders as its own full-width section with a stage timeline.
+/* ---- Publications ---------------------------------------------------------
+   Newest first. `authors` is printed with the site owner's name in bold.
+   `media` renders inline under the entry.
    ------------------------------------------------------------------------- */
-export interface ProgramStage {
-  index: number
-  /** Rail label, e.g. "Paper 1", "Library", "Next". */
-  label: string
+export type Media =
+  | { kind: 'figure'; src: string; alt: string; caption?: string }
+  | { kind: 'gallery'; images: { src: string; alt: string }[]; caption?: string }
+  | { kind: 'tabs'; demos: { label: string; src: string; alt: string }[]; caption?: string }
+  | { kind: 'video'; src: string; caption?: string }
+
+export interface Paper {
+  /** Anchor id, used by the research themes. */
+  id: string
   title: string
-  status: Status
-  venue: string
-  summary: string
-  href?: string
-  images?: { src: string; alt: string }[]
-  imagesCaption?: string
-  /** A single result figure, rendered larger than the gallery grid. */
-  figure?: { src: string; alt: string; caption: string }
-  /** Wide comparison clips, shown one at a time behind task tabs. */
-  demos?: { label: string; src: string; alt: string }[]
-  demosCaption?: string
+  /** One-line takeaway shown under the links. */
+  tldr?: string
+  authors?: string
+  /** Each item is a bold line (venue, award, status). */
+  venue: string[]
+  links: { label: string; href: string }[]
+  media?: Media
 }
 
-export interface Program {
-  kicker: string
-  name: string
-  url?: string
-  /** Short display text for the header link, e.g. "garrychess.ai". */
-  urlLabel?: string
-  blurb: string
-  stages: ProgramStage[]
-  video?: { src: string; caption: string }
-}
-
-const garrychess: Program = {
-  kicker: 'Research program · Human-guided search',
-  name: 'GarryChess',
-  url: 'https://www.garrychess.ai',
-  urlLabel: 'garrychess.ai',
-  blurb:
-    'A multi-year research program on using human policies to guide exploration in chess — letting a model of how a specific person plays decide which moves are worth searching at all. Three connected papers move from imitation, to a style representation disentangled from strength, to a learned controller that spends engine search where that person would look.',
-  video: {
-    src: '/reinforcement_learning_human_chess_example.mp4',
-    caption:
-      'Teaser — a rough preview of what Paper 3 (adaptive engine consultation) is aiming for.',
+export const publications: Paper[] = [
+  {
+    id: 'mspt',
+    title: 'Minimum Spanning Persistence Trees for Robotics',
+    tldr: 'An RL exploration paper looking at new ways to use state entropy.',
+    venue: ['In preparation for RSS 2027', 'Draft ready for the extended-abstract submission'],
+    links: [],
+    media: {
+      kind: 'tabs',
+      demos: [
+        { label: 'Trossen strike', src: '/mspt/trossen-strike.gif', alt: 'Trossen arm strike: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Kitchen · microwave', src: '/mspt/kitchen-microwave.gif', alt: 'Franka Kitchen microwave: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Swimmer', src: '/mspt/swimmer.gif', alt: 'Swimmer: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Walker', src: '/mspt/walker.gif', alt: 'Walker: MSPT and five baselines, one evaluation episode each' },
+        { label: 'Kitchen · top burner', src: '/mspt/kitchen-top-burner.gif', alt: 'Franka Kitchen top burner: MSPT and five baselines, one evaluation episode each' },
+      ],
+      caption: 'MSPT (top left) against SAC, APT, RND, ICM and Disagreement on the same task.',
+    },
   },
-  stages: [
-    {
-      index: 1,
-      label: 'Paper 1',
-      title:
-        'Beyond Imitation: Preference-Optimized Policies for Realistic Grandmaster Chess',
-      status: 'published',
-      venue: 'IEEE Conference on Games (CoG) 2026 · Oral',
-      summary:
-        'Style-weighted preference optimization (DPO variants) fine-tunes a human move model toward a target grandmaster, producing play that is both strong and recognizably in-style. First author, team of three.',
-      href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing',
+  {
+    id: 'engine-consultation',
+    title: 'Learned, Adaptive Engine Consultation for Human Move Prediction',
+    tldr: 'An RL controller that decides which candidate moves are worth searching with Stockfish, and how deeply, under a compute budget.',
+    venue: ['In preparation'],
+    links: [{ label: 'project page', href: 'https://www.garrychess.ai' }],
+    media: {
+      kind: 'video',
+      src: '/reinforcement_learning_human_chess_example.mp4',
+      caption: 'Teaser: a rough preview of what this paper is aiming for.',
     },
-    {
-      index: 2,
-      label: 'Paper 2',
-      title: 'Matilda: Engine-Agnostic Search with Human Policy Guidance',
-      status: 'preprint',
-      venue: 'Preprint on arXiv · Under review at AAAI 2027 (Phase 2)',
-      summary:
-        'Matilda decouples search from neural human-policy priors, then recombines them through a residual re-ranker to achieve state-of-the-art elite chess move prediction (+18.5% over Maia-3 23M).',
-      href: 'https://arxiv.org/abs/2606.25176',
+  },
+  {
+    id: 'topoexplore',
+    title: 'TopoExplore: Homology as an Exploration Signal',
+    tldr: 'Uses the holes in the visited space as a signal for where to explore, building on Go-Explore.',
+    authors: 'Jason Carlson',
+    venue: ['Preprint', 'Under review at ICLR 2027'],
+    links: [{ label: 'paper', href: 'https://arxiv.org/abs/2607.09971' }],
+    media: {
+      kind: 'figure',
+      src: '/topoexplore/solve-profile.png',
+      alt: 'Solve profile: fraction of TopoGym worlds solved against training steps, comparing Go-Explore with three TopoExplore variants. All three TopoExplore curves rise faster and settle higher than Go-Explore.',
+      caption:
+        'Fraction of TopoGym worlds solved over training. The coverage Go-Explore reaches at 1M steps is matched by TopoExplore at about 0.5M, and by the curvature variants at about 0.3M.',
     },
-    {
-      index: 3,
-      label: 'Paper 3',
-      title:
-        'Learned, Adaptive Engine Consultation for Human Move Prediction',
-      status: 'in-preparation',
-      venue: 'In preparation',
-      summary:
-        'A reinforcement-learning controller that decides — from the Maia-3 hidden representation of the board and recent moves — which candidate moves are worth searching with Stockfish and how deeply, under a compute budget. Reward is tied to downstream move-prediction and style fidelity per unit of engine compute.',
-    },
-  ],
-}
-
-const topology: Program = {
-  kicker: 'Research program · Exploration',
-  name: 'Topological Exploration',
-  url: 'https://github.com/jcarlson212/TopoGym',
-  urlLabel: 'TopoGym on GitHub',
-  blurb:
-    'A research program on exploration that uses the shape of an environment — the loops, enclosed chambers, and one-way passages that generic novelty-seeking treats as noise. TopoGym makes topological RL environments widely available; TopoExplore tests whether an agent can exploit them.',
-  stages: [
-    {
-      index: 1,
-      label: 'Library',
-      title:
-        'TopoGym: Environments and Benchmarks for Topological Exploration in RL',
-      status: 'software',
-      venue: 'Open-source Python library · Gymnasium API',
-      summary:
-        'A suite of 2D gridworld and continuous environments for testing sparse-reward RL algorithms.',
-      href: 'https://github.com/jcarlson212/TopoGym',
+  },
+  {
+    id: 'topogym',
+    title: 'TopoGym: Environments and Benchmarks for Topological Exploration in RL',
+    tldr: 'Gridworld and continuous environments whose topology is known exactly, for testing sparse-reward exploration.',
+    authors: 'Jason Carlson',
+    venue: ['Open-source library'],
+    links: [
+      { label: 'code', href: 'https://github.com/jcarlson212/TopoGym' },
+      { label: 'blog post', href: '/blog/a_tour_of_topogym' },
+    ],
+    media: {
+      kind: 'gallery',
       images: [
         { src: '/topogym/missions/orbital-dock.gif', alt: 'OrbitDock: a thruster craft finding the docking chamber through a bottleneck' },
         { src: '/topogym/missions/lava-braid.gif', alt: 'LavaBraid3: a rover in a lava tube braided into three loops' },
@@ -161,242 +144,164 @@ const topology: Program = {
         { src: '/topogym/nested3.gif', alt: 'Nested3: three nested chambers with hidden doors' },
         { src: '/topogym/top-torus.gif', alt: 'TopTorus: torus world with identified edges drawn as fundamental-polygon arrows' },
       ],
-      imagesCaption:
-        'Top: 2DContinuousMissions (preview), continuous missions with physical bodies whose topology is certified per body: OrbitDock, LavaBraid3, IceKeelCavity, RubbleVoids. Bottom: the TopoGym-v1 gridworlds EnvironmentalIceShip, SpaceWarp, Nested3, TopTorus.',
+      caption:
+        'Top: continuous missions (OrbitDock, LavaBraid3, IceKeelCavity, RubbleVoids). Bottom: gridworlds (EnvironmentalIceShip, SpaceWarp, Nested3, TopTorus).',
     },
-    {
-      index: 2,
-      label: 'Paper 1',
-      title: 'TopoExplore: Homology as an Exploration Signal',
-      status: 'preprint',
-      venue: 'Preprint on arXiv · Under review at ICLR 2027',
-      summary:
-        'TopoExplore uses the holes in the visited space as a signal for where to explore, building on Go-Explore and evaluated on the TopoGym benchmarks.',
-      href: 'https://arxiv.org/abs/2607.09971',
-      figure: {
-        src: '/topoexplore/solve-profile.png',
-        alt: 'Solve profile: fraction of TopoGym worlds solved against training steps, comparing Go-Explore with three TopoExplore variants. All three TopoExplore curves rise faster and settle higher than Go-Explore.',
-        caption:
-          'Solve profile over a few dozen TopoGym worlds, several seeds each; bands are the spread across seeds. The coverage Go-Explore reaches at 1M steps is matched by TopoExplore at about 0.5M, and by the curvature variants at about 0.3M. Curvature does nearly all of that work — TE + both tracks it closely.',
-      },
-    },
-    {
-      index: 3,
-      label: 'Paper 2',
-      title: 'Minimum Spanning Persistence Trees for Robotics',
-      status: 'in-preparation',
-      venue: 'In preparation for RSS 2027 · Draft ready for the extended-abstract submission',
-      summary:
-        'An RL exploration paper looking at new ways to use state entropy, evaluated on locomotion and manipulation tasks against standard exploration baselines.',
-      demos: [
-        { label: 'Trossen strike', src: '/mspt/trossen-strike.gif', alt: 'Trossen arm strike: MSPT and five baselines, one evaluation episode each' },
-        { label: 'Kitchen · microwave', src: '/mspt/kitchen-microwave.gif', alt: 'Franka Kitchen microwave: MSPT and five baselines, one evaluation episode each' },
-        { label: 'Swimmer', src: '/mspt/swimmer.gif', alt: 'Swimmer: MSPT and five baselines, one evaluation episode each' },
-        { label: 'Walker', src: '/mspt/walker.gif', alt: 'Walker: MSPT and five baselines, one evaluation episode each' },
-        { label: 'Kitchen · top burner', src: '/mspt/kitchen-top-burner.gif', alt: 'Franka Kitchen top burner: MSPT and five baselines, one evaluation episode each' },
-      ],
-      demosCaption:
-        'MSPT (top left) against SAC, APT, RND, ICM and Disagreement on the same task.',
-    },
-    {
-      index: 4,
-      label: 'Next',
-      title: 'More to come',
-      status: 'planned',
-      venue: 'Planned',
-      summary:
-        'From robotics benchmarks toward world models: finding exploration opportunities in the latent space, and eventually exploring the real world.',
-    },
-  ],
-}
-
-export const programs: Program[] = [topology, garrychess]
-
-/* ---- Other research ------------------------------------------------------ */
-export interface ResearchItem {
-  title: string
-  status: Status
-  venue: string
-  summary: string
-  tags: string[]
-  href?: string
-}
-
-export const otherResearch: ResearchItem[] = [
-  {
-    title:
-      'The Use of AutoML for Predicting Intracranial Aneurysm Rupture',
-    status: 'published',
-    venue: 'Congress of Neurological Surgeons (CNS) 2025 · Poster',
-    summary:
-      'Benchmarks automated machine learning against hand-engineered pipelines for clinical aneurysm-rupture risk prediction. Co-author.',
-    tags: ['Clinical ML', 'AutoML'],
-    href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing',
   },
-]
-
-/* ---- Experience ---------------------------------------------------------- */
-export interface Job {
-  org: string
-  role: string
-  period: string
-  points: string[]
-  stack?: string
-}
-
-export const experience: Job[] = [
   {
-    org: 'Independent AI Researcher',
-    role: 'Research',
-    period: '2025 — Present',
-    points: [
-      'Evaluating the safety and fidelity of LLM-generated reasoning in clinical decision-making (aneurysm rupture risk) — analyzing misleading explanations and overconfidence.',
-      'Training preference-optimized policies (DPO variants) to model human decision-making in chess (garrychess.ai); accepted as an IEEE CoG oral.',
-      'Researching robust exploration methods in reinforcement learning.',
+    id: 'matilda',
+    title: 'Matilda: Engine-Agnostic Search with Human Policy Guidance',
+    tldr: 'Decouples search from neural human-policy priors, then recombines them with a residual re-ranker for state-of-the-art elite move prediction.',
+    authors: 'Jason Carlson',
+    venue: ['Preprint', 'Under review at AAAI 2027 (Phase 2)'],
+    links: [
+      { label: 'paper', href: 'https://arxiv.org/abs/2606.25176' },
+      { label: 'project page', href: 'https://www.garrychess.ai' },
     ],
   },
   {
-    org: 'Amazon',
-    role: 'Software Engineer II',
-    period: '2021 — 2026',
-    points: [
-      'Led a supervised credit-extension model trained on 1M+ payment-failure labels, replacing a rule-based system and generating an estimated $43M annual profit (+200%).',
-      'Designed RL-based credit-allocation experiments (PPO + safety constraints) to optimize long-term outcomes under risk limits.',
-      'Built an inference service for a BERT-class embedding model generating 1B+ embeddings/day on AWS Inferentia; fine-tuned a foundation model for ticket root-cause analysis (SFT + Ray).',
+    id: 'beyond-imitation',
+    title: 'Beyond Imitation: Preference-Optimized Policies for Realistic Grandmaster Chess',
+    tldr: 'Style-weighted preference optimization tunes a human move model toward a target grandmaster: strong play that is recognizably in style.',
+    authors: 'Jason Carlson, L. Bernard, B. H. Carlson',
+    venue: ['IEEE CoG 2026 (Oral)'],
+    links: [
+      { label: 'paper', href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing' },
+      { label: 'project page', href: 'https://www.garrychess.ai' },
     ],
-    stack: 'PyTorch · Ray · JAX · Spark · AWS',
   },
   {
-    org: 'AppLovin',
-    role: 'Senior Software Engineer',
-    period: '2024 — 2025',
-    points: [
-      'Built a large-scale identity-graph system, cutting infrastructure cost by $1.8M/year and improving cold-start latency by 87.5%.',
+    id: 'automl',
+    title: 'The Use of AutoML for Predicting Intracranial Aneurysm Rupture',
+    tldr: 'Benchmarks automated ML against hand-engineered pipelines for aneurysm-rupture risk prediction.',
+    authors: 'Jason Carlson, B. H. Carlson',
+    venue: ['CNS 2025 (Poster)'],
+    links: [
+      { label: 'paper', href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing' },
     ],
-    stack: 'Spark · Airflow · Java · Delta Lake · GCP',
+  },
+  {
+    id: 'inferentia',
+    title: 'How Amazon Search Reduced ML Inference Costs by 85% with AWS Inferentia',
+    authors: 'J. Moura, Jason Carlson, J. Singh, S. Xi, S. Koparkar, H. Sun, W. Zhang, Z. Zhang',
+    venue: ['AWS Machine Learning Blog, 2022'],
+    links: [
+      { label: 'article', href: 'https://aws.amazon.com/blogs/machine-learning/how-amazon-search-reduced-ml-inference-costs-by-85-with-aws-inferentia/' },
+    ],
   },
 ]
 
-/* ---- Education ----------------------------------------------------------- */
-export const education = [
-  {
-    school: 'Arizona State University',
-    degree: 'M.A. Mathematics',
-    detail: 'GPA 4.0 · Analysis, topology, abstract algebra',
-    year: '2021',
-  },
-  {
-    school: 'Arizona State University',
-    degree: 'B.S. Computer Science · B.S. Mathematics',
-    detail: "GPA 3.9 · Dean's Scholarship · Outstanding Junior, Math Dept.",
-    year: '2020',
-  },
-]
-
-/* ---- Talks & videos ----------------------------------------------------- */
+/* ---- Talks --------------------------------------------------------------- */
 export interface Talk {
   title: string
-  year: string
-  summary: string
-  youtubeId: string
-}
-
-export const talks: Talk[] = [
-  {
-    title: 'Trust Region Policy Optimization',
-    year: '2026',
-    summary: 'A video explaining Trust Region Policy Optimization (Schulman et al., 2017).',
-    youtubeId: 'OFgpPEjyJew',
-  },
-]
-
-/* ---- Selected earlier projects ------------------------------------------ */
-export interface Project {
-  name: string
-  year: string
-  summary: string
+  where: string
+  date: string
   href?: string
 }
 
-export const projects: Project[] = [
+export const talks: { heading: string; items: Talk[] }[] = [
   {
-    name: 'Chaos-Theory Website',
-    year: '2020',
-    summary:
-      'Interactive simulations of chaotic differential equations (React, MATLAB, React-vis) alongside the underlying theorems.',
-    href: 'https://jcarlson212.github.io/Chaos-Theory/',
+    heading: 'Conference Talks',
+    items: [
+      {
+        title: 'Beyond Imitation: Preference-Optimized Policies for Realistic Grandmaster Chess',
+        where: 'IEEE Conference on Games (Oral)',
+        date: '2026',
+      },
+    ],
   },
   {
-    name: 'Search Algorithm Visualizer',
-    year: '2020',
-    summary: 'Visualizes DFS, BFS, and A* pathfinding in the browser. Built with React.',
-    href: 'https://jcarlson212.github.io/Path-Finding-Visualizer/',
-  },
-  {
-    name: 'Berkeley Pac-Man AI',
-    year: '2019',
-    summary:
-      'Search and adversarial agents for the Berkeley Pac-Man projects — 100% across all projects.',
+    heading: 'Videos',
+    items: [
+      {
+        title: 'Trust Region Policy Optimization, explained',
+        where: 'YouTube',
+        date: '2026',
+        href: 'https://youtu.be/OFgpPEjyJew',
+      },
+    ],
   },
 ]
 
-/* ---- Publication list (formal) ------------------------------------------ */
-export interface Publication {
+/* ---- CV-style lists (Education, Work Experience, Honors) ----------------- */
+export interface Entry {
   title: string
-  authors: string
-  venue: string
-  year: string
-  status: Status
-  href?: string
-  /** Optional label (e.g. "Article") to distinguish non-peer-reviewed work. */
-  type?: string
+  date: string
+  lines: string[]
 }
 
-export const publications: Publication[] = [
+export const education: Entry[] = [
   {
-    title: 'TopoExplore: Homology as an Exploration Signal',
-    authors: 'J. Carlson',
-    venue: 'Under review at ICLR 2027',
-    year: '2026',
-    status: 'preprint',
-    href: 'https://arxiv.org/abs/2607.09971',
+    title: 'Arizona State University',
+    date: 'Jun 2021',
+    lines: ['M.A. in Mathematics', 'GPA 4.0'],
   },
   {
-    title:
-      'Beyond Imitation: Preference-Optimized Policies for Realistic Grandmaster Chess',
-    authors: 'J. Carlson, et al.',
-    venue: 'IEEE Conference on Games (CoG) — Oral',
-    year: '2026',
-    status: 'published',
-    href: 'https://drive.google.com/file/d/15fAJXPF2haC8Y6Gw3452G2hU8vtzsO-E/view?usp=sharing',
-  },
-  {
-    title: 'Matilda: Engine-Agnostic Search with Human Policy Guidance',
-    authors: 'J. Carlson',
-    venue: 'Under review at AAAI 2027 (Phase 2)',
-    year: '2026',
-    status: 'preprint',
-    href: 'https://arxiv.org/abs/2606.25176',
-  },
-  {
-    title: 'The Use of AutoML for Predicting Intracranial Aneurysm Rupture',
-    authors: 'Co-authored',
-    venue: 'Congress of Neurological Surgeons (CNS) — Poster',
-    year: '2025',
-    status: 'published',
-    href: 'https://docs.google.com/document/d/1HFvOFimXU8G6AL21yJkcq3okjf4Dxz0A0LRsxWaVJ_4/edit?usp=sharing',
-  },
-  {
-    title:
-      'How Amazon Search Reduced ML Inference Costs by 85% with AWS Inferentia',
-    authors: 'J. Moura, J. Carlson, J. Singh, et al.',
-    venue: 'AWS Machine Learning Blog',
-    year: '2022',
-    status: 'published',
-    type: 'Article',
-    href: 'https://aws.amazon.com/blogs/machine-learning/how-amazon-search-reduced-ml-inference-costs-by-85-with-aws-inferentia/',
+    title: 'Arizona State University',
+    date: 'Jun 2020',
+    lines: ['B.S. in Mathematics, second major in Computer Science', 'GPA 3.9'],
   },
 ]
+
+export const experience: Entry[] = [
+  {
+    title: 'New York University',
+    date: 'Oct 2026 - Present',
+    lines: ['Visiting Researcher'],
+  },
+  {
+    title: 'Independent Researcher',
+    date: 'May 2026 - Oct 2026',
+    lines: ['Exploration in RL (TopoExplore, TopoGym) and human move prediction in chess (GarryChess)'],
+  },
+  {
+    title: 'Amazon',
+    date: 'May 2025 - Apr 2026',
+    lines: ['Software Engineer II', 'Machine learning systems for credit extension and risk modeling'],
+  },
+  {
+    title: 'AppLovin',
+    date: 'Oct 2024 - Mar 2025',
+    lines: ['Senior Software Engineer', 'Large-scale identity-graph infrastructure and distributed data systems'],
+  },
+  {
+    title: 'Amazon',
+    date: 'Jun 2021 - Sep 2024',
+    lines: [
+      'Software Engineer I, II',
+      'Technical lead of a team of six; petabyte-scale catalog grouping and large-scale embedding infrastructure',
+    ],
+  },
+]
+
+export const honors: Entry[] = [
+  {
+    title: 'Outstanding Junior Award',
+    date: '2019',
+    lines: ['Department of Mathematics, Arizona State University'],
+  },
+  {
+    title: "Dean's Scholarship",
+    date: '',
+    lines: ['Arizona State University'],
+  },
+]
+
+/* ---- Coursework ---------------------------------------------------------- */
+export const coursework = {
+  heading: 'Arizona State University (Selected)',
+  courses: [
+    'Real Analysis I, II',
+    'Functional Analysis I, II',
+    'Geometry/Topology of Manifolds I, II',
+    'Abstract Algebra I, II',
+    'C*-Algebras',
+    'Differential Equations I',
+    'Graph Theory I',
+    'Theory of Statistics I',
+    'Computational Statistics',
+  ],
+}
 
 export const meta = {
   /** Bump when content changes meaningfully. */

@@ -4,46 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jason Carlson — AI Research Engineer</title>
+    <title>Jason Carlson</title>
     <meta
       name="description"
-      content="Jason Carlson — AI research engineer working on personalized policies (LLM fine-tuning + RL) and exploration for robotics. Based in New York."
+      content="Jason Carlson — visiting researcher at NYU working on exploration in reinforcement learning for robotics."
     />
     <link rel="canonical" href="https://jasoncarlson.org/" />
 
     <!-- Open Graph / social -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Jason Carlson — AI Research Engineer" />
+    <meta property="og:title" content="Jason Carlson — Visiting Researcher, NYU" />
     <meta
       property="og:description"
-      content="Human-aligned policy learning, reinforcement learning, and clinical ML."
+      content="Exploration in reinforcement learning for robotics."
     />
     <meta property="og:url" content="https://jasoncarlson.org/" />
     <meta name="twitter:card" content="summary" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" />
 
-    <!-- Fonts: Inter (body/headings) + JetBrains Mono (metadata labels) -->
+    <!-- Font: Lato -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <script>
-      // Set theme before first paint to avoid a flash.
-      (function () {
-        try {
-          var t = localStorage.getItem('theme');
-          if (t !== 'light' && t !== 'dark') {
-            t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          }
-          document.documentElement.setAttribute('data-theme', t);
-        } catch (e) {}
-      })();
-    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

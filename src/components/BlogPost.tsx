@@ -84,7 +84,6 @@ export default function BlogPost() {
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    window.scrollTo(0, 0)
     if (!post) return
     document.title = `${post.title} — Jason Carlson`
     let cancelled = false
@@ -101,74 +100,69 @@ export default function BlogPost() {
       })
     return () => {
       cancelled = true
-      document.title = 'Jason Carlson — AI Research Engineer'
+      document.title = 'Jason Carlson'
     }
   }, [post])
 
   if (!post) {
     return (
-      <section className="section section--flush post">
-        <div className="container">
-          <p className="eyebrow">Blog</p>
-          <h1 className="section-title">Post not found</h1>
-          <Link to="/blog" className="link">
-            ← Back to all posts
-          </Link>
-        </div>
-      </section>
+      <div className="page">
+        <Link to="/" className="back">
+          ← Home
+        </Link>
+        <h2>Post not found</h2>
+      </div>
     )
   }
 
   return (
-    <article className="section section--flush post">
-      <div className="container post__container">
-        <Link to="/blog" className="link post__back">
-          ← All posts
-        </Link>
-        <header className="post__header">
-          <h1 className="post__title">{post.title}</h1>
-          <div className="post__meta">
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span aria-hidden>·</span>
-            <span>Jason Carlson</span>
-          </div>
-        </header>
+    <article className="page post">
+      <Link to="/" className="back">
+        ← Home
+      </Link>
+      <header className="post__header">
+        <h1 className="post__title">{post.title}</h1>
+        <div className="post__meta">
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <span aria-hidden>·</span>
+          <span>Jason Carlson</span>
+        </div>
+      </header>
 
-        {error && (
-          <p className="post__status">Couldn’t load this post. Please try again later.</p>
-        )}
-        {!error && markdown === null && <p className="post__status">Loading…</p>}
-        {markdown !== null && (
-          <div className="post__body">
-            <ReactMarkdown
-              remarkPlugins={[remarkMath, remarkGfm]}
-              rehypePlugins={[rehypeKatex]}
-              components={{
-                img: (props) => {
-                  // Recover the caption exactly as written (with $...$)
-                  // from the image's source span in the markdown.
-                  let rawAlt: string | undefined
-                  const pos = props.node?.position
-                  if (pos?.start.offset != null && pos.end.offset != null) {
-                    const span = markdown.slice(pos.start.offset, pos.end.offset)
-                    rawAlt = span.match(/^!\[([\s\S]*)\]\(/)?.[1]
-                  }
-                  return (
-                    <PostImage
-                      src={props.src}
-                      alt={props.alt}
-                      rawAlt={rawAlt}
-                      slug={post.slug}
-                    />
-                  )
-                },
-              }}
-            >
-              {markdown}
-            </ReactMarkdown>
-          </div>
-        )}
-      </div>
+      {error && (
+        <p className="post__status">Couldn’t load this post. Please try again later.</p>
+      )}
+      {!error && markdown === null && <p className="post__status">Loading…</p>}
+      {markdown !== null && (
+        <div className="post__body">
+          <ReactMarkdown
+            remarkPlugins={[remarkMath, remarkGfm]}
+            rehypePlugins={[rehypeKatex]}
+            components={{
+              img: (props) => {
+                // Recover the caption exactly as written (with $...$)
+                // from the image's source span in the markdown.
+                let rawAlt: string | undefined
+                const pos = props.node?.position
+                if (pos?.start.offset != null && pos.end.offset != null) {
+                  const span = markdown.slice(pos.start.offset, pos.end.offset)
+                  rawAlt = span.match(/^!\[([\s\S]*)\]\(/)?.[1]
+                }
+                return (
+                  <PostImage
+                    src={props.src}
+                    alt={props.alt}
+                    rawAlt={rawAlt}
+                    slug={post.slug}
+                  />
+                )
+              },
+            }}
+          >
+            {markdown}
+          </ReactMarkdown>
+        </div>
+      )}
     </article>
   )
 }
