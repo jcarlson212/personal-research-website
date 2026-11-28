@@ -26,7 +26,7 @@ export const news: { date: string; text: string; href?: string }[] = [
   { date: 'Nov 2026', text: 'Submitted an extended abstract to RSS 2027.' },
   { date: 'Oct 2026', text: 'Joined Benjamin Riviere at NYU as a visiting researcher.' },
   { date: 'Aug 2026', text: 'New blog post: A Tour of TopoGym.', href: '/blog/a_tour_of_topogym' },
-  { date: 'Jul 2026', text: 'TopoExplore preprint on arXiv; under review at ICLR 2027.', href: 'https://arxiv.org/abs/2607.09971' },
+  { date: 'Jul 2026', text: 'TopoExplore preprint on arXiv.', href: 'https://arxiv.org/abs/2607.09971' },
   { date: 'Jun 2026', text: 'Matilda preprint on arXiv; under review at AAAI 2027.', href: 'https://arxiv.org/abs/2606.25176' },
   { date: 'May 2026', text: 'Left Amazon to work full-time as an independent researcher.' },
 ]
@@ -112,7 +112,7 @@ export const publications: Paper[] = [
     title: 'TopoExplore: Homology as an Exploration Signal',
     tldr: 'Uses the holes in the visited space as a signal for where to explore, building on Go-Explore.',
     authors: 'Jason Carlson',
-    venue: ['Preprint', 'Under review at ICLR 2027'],
+    venue: ['Preprint', 'In preparation for ICML 2027'],
     links: [{ label: 'paper', href: 'https://arxiv.org/abs/2607.09971' }],
     media: {
       kind: 'figure',
